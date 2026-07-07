@@ -1,37 +1,395 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Anonymous Project Page</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anonymous Video Project</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <h1>Anonymous Project Page</h1>
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="page-progress" aria-hidden="true"><span></span></div>
 
-  <p>
-    This page provides anonymous supplementary visual results for the submitted paper.
-  </p>
+  <aside class="side-rail" aria-label="Section navigation">
+    <a href="#top" class="rail-dot active" data-section="top"><span>Intro</span></a>
+    <a href="#spotlight" class="rail-dot" data-section="spotlight"><span>Spotlight</span></a>
+    <a href="#semantic-showcase" class="rail-dot" data-section="semantic-showcase"><span>Semantics</span></a>
+    <a href="#process" class="rail-dot" data-section="process"><span>Process</span></a>
+    <a href="#ablation" class="rail-dot" data-section="ablation"><span>Ablation</span></a>
+    <a href="#gallery" class="rail-dot" data-section="gallery"><span>Gallery</span></a>
+  </aside>
 
+  <header class="topbar">
+    <a class="logo" href="#top">
+      <span class="logo-orb"></span>
+      <span>Anonymous Video Page</span>
+    </a>
 
-  <h2>Video Results</h2>
+    <nav class="topnav">
+      <a href="#spotlight">Results</a>
+      <a href="#semantic-showcase">Comparisons</a>
+      <a href="#process">Process</a>
+      <a href="#gallery">Gallery</a>
+    </nav>
 
-  <div class="video-block">
-    <h3>Example 1</h3>
-    <video controls>
-      <source src="assets/videos/baseline.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <div class="top-actions">
+      <a class="button ghost" href="#spotlight">Project</a>
+      <a class="button dark" href="https://anonymous.4open.science/r/Coarse_2_Refined/" target="_blank" rel="noopener">Code</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero-shell">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="mesh mesh-a"></div>
+        <div class="mesh mesh-b"></div>
+        <div class="mesh mesh-c"></div>
+        <div class="grid-fade"></div>
+      </div>
+
+      <div class="hero-content reveal">
+        <p class="kicker">Anonymous Supplementary Website</p>
+        <h1>
+          Coarse-to-refined
+          <span>video generation</span>
+        </h1>
+        <p class="lead">
+          A visual-first project page for comparing semantic stability, fine-grained realization,
+          and denoising-stage behavior through organized video evidence.
+        </p>
+
+        <div class="hero-buttons">
+          <a class="button dark large magnetic" href="#spotlight">View Videos</a>
+          <a class="button light large magnetic" href="https://anonymous.4open.science/r/Coarse_2_Refined/" target="_blank" rel="noopener">Anonymous Code</a>
+        </div>
+
+        <div class="mini-metrics" aria-label="Page highlights">
+          <div><strong>6</strong><span>semantic groups</span></div>
+          <div><strong>2</strong><span>generation stages</span></div>
+          <div><strong>30+</strong><span>video slots</span></div>
+        </div>
+      </div>
+
+      <div class="hero-theatre reveal">
+        <div class="theatre-card main-card" data-tilt>
+          <video muted autoplay loop playsinline preload="metadata" poster="assets/images/hero_poster.jpg">
+            <source src="assets/videos/hero_coarse_to_refined.mp4" type="video/mp4" />
+          </video>
+          <div class="floating-label top-left">Main demo</div>
+          <div class="floating-label bottom-right">coarse → refined</div>
+        </div>
+
+        <div class="orbit-card card-one" data-tilt>
+          <video muted autoplay loop playsinline preload="metadata">
+            <source src="assets/videos/hero_structure.mp4" type="video/mp4" />
+          </video>
+          <span>Structure</span>
+        </div>
+
+        <div class="orbit-card card-two" data-tilt>
+          <video muted autoplay loop playsinline preload="metadata">
+            <source src="assets/videos/hero_details.mp4" type="video/mp4" />
+          </video>
+          <span>Details</span>
+        </div>
+
+        <div class="stage-map" aria-hidden="true">
+          <div class="stage-node active"><b>01</b><span>Coarse</span></div>
+          <div class="stage-line"></div>
+          <div class="stage-node"><b>02</b><span>CRTG</span></div>
+          <div class="stage-line"></div>
+          <div class="stage-node active refined"><b>03</b><span>Refined</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="spotlight" class="section feature-section">
+      <div class="section-header reveal">
+        <p class="kicker">Spotlight</p>
+        <h2>Large-format visual results</h2>
+        <p>Use this part for your strongest qualitative examples. Keep the text minimal and let the videos carry the evidence.</p>
+      </div>
+
+      <div class="bento-grid">
+        <article class="bento-card xl reveal" data-tilt>
+          <div class="video-wrap cinematic">
+            <video controls muted playsinline preload="metadata">
+              <source src="assets/videos/spotlight_main.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-meta">
+            <span>Primary sample</span>
+            <h3>Coarse structure with refined details</h3>
+          </div>
+        </article>
+
+        <article class="bento-card reveal" data-tilt>
+          <div class="video-wrap">
+            <video controls muted playsinline preload="metadata">
+              <source src="assets/videos/spotlight_subject_layout.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-meta">
+            <span>Coarse semantics</span>
+            <h3>Subject and layout stability</h3>
+          </div>
+        </article>
+
+        <article class="bento-card reveal" data-tilt>
+          <div class="video-wrap">
+            <video controls muted playsinline preload="metadata">
+              <source src="assets/videos/spotlight_local_event.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-meta">
+            <span>Fine semantics</span>
+            <h3>Local event realization</h3>
+          </div>
+        </article>
+
+        <article class="bento-card wide reveal" data-tilt>
+          <div class="video-wrap panoramic">
+            <video controls muted playsinline preload="metadata">
+              <source src="assets/videos/spotlight_long_scene.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card-meta horizontal">
+            <span>Visual coherence</span>
+            <h3>Stable generation over a complex scene</h3>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="semantic-showcase" class="section semantic-section">
+      <div class="section-header split reveal">
+        <div>
+          <p class="kicker">Semantic groups</p>
+          <h2>Structured baseline-vs-ours comparisons</h2>
+        </div>
+        <div class="tabbar" role="tablist" aria-label="Semantic comparison tabs">
+          <button class="tab active" data-tab="coarse">Coarse</button>
+          <button class="tab" data-tab="fine">Fine</button>
+          <button class="tab" data-tab="all">All</button>
+        </div>
+      </div>
+
+      <div class="semantic-panel active" data-panel="coarse">
+        <div class="comparison-row reveal">
+          <div class="comparison-label">
+            <span>01</span>
+            <h3>Subject objects</h3>
+          </div>
+          <div class="compare-pair">
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/subject_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure>
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/subject_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure>
+          </div>
+        </div>
+
+        <div class="comparison-row reveal">
+          <div class="comparison-label">
+            <span>02</span>
+            <h3>Spatial layout</h3>
+          </div>
+          <div class="compare-pair">
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/layout_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure>
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/layout_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure>
+          </div>
+        </div>
+
+        <div class="comparison-row reveal">
+          <div class="comparison-label">
+            <span>03</span>
+            <h3>Global motion</h3>
+          </div>
+          <div class="compare-pair">
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/motion_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure>
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/motion_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="semantic-panel" data-panel="fine">
+        <div class="comparison-row reveal">
+          <div class="comparison-label">
+            <span>04</span>
+            <h3>Local events</h3>
+          </div>
+          <div class="compare-pair">
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/events_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure>
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/events_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure>
+          </div>
+        </div>
+
+        <div class="comparison-row reveal">
+          <div class="comparison-label">
+            <span>05</span>
+            <h3>Appearance attributes</h3>
+          </div>
+          <div class="compare-pair">
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/appearance_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure>
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/appearance_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure>
+          </div>
+        </div>
+
+        <div class="comparison-row reveal">
+          <div class="comparison-label">
+            <span>06</span>
+            <h3>Background details</h3>
+          </div>
+          <div class="compare-pair">
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/background_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure>
+            <figure><video controls muted playsinline preload="metadata"><source src="assets/videos/background_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="semantic-panel all-panel" data-panel="all">
+        <div class="compact-wall reveal">
+          <article><video controls muted playsinline preload="metadata"><source src="assets/videos/subject_ours.mp4" type="video/mp4" /></video><span>Subject objects</span></article>
+          <article><video controls muted playsinline preload="metadata"><source src="assets/videos/layout_ours.mp4" type="video/mp4" /></video><span>Spatial layout</span></article>
+          <article><video controls muted playsinline preload="metadata"><source src="assets/videos/motion_ours.mp4" type="video/mp4" /></video><span>Global motion</span></article>
+          <article><video controls muted playsinline preload="metadata"><source src="assets/videos/events_ours.mp4" type="video/mp4" /></video><span>Local events</span></article>
+          <article><video controls muted playsinline preload="metadata"><source src="assets/videos/appearance_ours.mp4" type="video/mp4" /></video><span>Appearance</span></article>
+          <article><video controls muted playsinline preload="metadata"><source src="assets/videos/background_ours.mp4" type="video/mp4" /></video><span>Background</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" class="section process-section">
+      <div class="section-header reveal">
+        <p class="kicker">Inference process</p>
+        <h2>Animated denoising-stage layout</h2>
+      </div>
+
+      <div class="process-canvas reveal">
+        <div class="process-line" aria-hidden="true"></div>
+
+        <article class="process-node node-left" data-tilt>
+          <div class="node-index">Stage 1</div>
+          <div class="video-wrap">
+            <video controls muted playsinline preload="metadata">
+              <source src="assets/videos/process_coarse_stage.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <h3>High-noise coarse denoising</h3>
+        </article>
+
+        <article class="process-node node-center" data-tilt>
+          <div class="node-index">Switch</div>
+          <div class="video-wrap">
+            <video controls muted playsinline preload="metadata">
+              <source src="assets/videos/process_transition_guidance.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <h3>Coarse-to-refined transition</h3>
+        </article>
+
+        <article class="process-node node-right" data-tilt>
+          <div class="node-index">Stage 2</div>
+          <div class="video-wrap">
+            <video controls muted playsinline preload="metadata">
+              <source src="assets/videos/process_refined_stage.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <h3>Low-noise refined denoising</h3>
+        </article>
+      </div>
+
+      <div class="strip-gallery reveal" aria-label="Short process clips">
+        <video controls muted playsinline preload="metadata"><source src="assets/videos/process_step_01.mp4" type="video/mp4" /></video>
+        <video controls muted playsinline preload="metadata"><source src="assets/videos/process_step_02.mp4" type="video/mp4" /></video>
+        <video controls muted playsinline preload="metadata"><source src="assets/videos/process_step_03.mp4" type="video/mp4" /></video>
+        <video controls muted playsinline preload="metadata"><source src="assets/videos/process_step_04.mp4" type="video/mp4" /></video>
+        <video controls muted playsinline preload="metadata"><source src="assets/videos/process_step_05.mp4" type="video/mp4" /></video>
+      </div>
+    </section>
+
+    <section id="ablation" class="section ablation-section">
+      <div class="section-header split reveal">
+        <div>
+          <p class="kicker">Ablations</p>
+          <h2>Component-level video evidence</h2>
+        </div>
+        <p>Designed as a dense visual board rather than a text-heavy explanation.</p>
+      </div>
+
+      <div class="ablation-board">
+        <article class="ablation-card reveal" data-tilt>
+          <span>w/o adaptive scheduling</span>
+          <video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_no_gap_schedule.mp4" type="video/mp4" /></video>
+        </article>
+        <article class="ablation-card tall reveal" data-tilt>
+          <span>full method</span>
+          <video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_full_method.mp4" type="video/mp4" /></video>
+        </article>
+        <article class="ablation-card reveal" data-tilt>
+          <span>w/o CRTG</span>
+          <video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_no_crtg.mp4" type="video/mp4" /></video>
+        </article>
+        <article class="ablation-card reveal" data-tilt>
+          <span>w/o budget reallocation</span>
+          <video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_no_reallocation.mp4" type="video/mp4" /></video>
+        </article>
+        <article class="ablation-card wide reveal" data-tilt>
+          <span>fixed transition vs. adaptive transition</span>
+          <video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_fixed_vs_adaptive.mp4" type="video/mp4" /></video>
+        </article>
+      </div>
+    </section>
+
+    <section id="gallery" class="section gallery-section">
+      <div class="section-header split reveal">
+        <div>
+          <p class="kicker">Visual gallery</p>
+          <h2>More results in a cinematic grid</h2>
+        </div>
+        <div class="gallery-filter" role="tablist" aria-label="Gallery filters">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="coarse">Coarse</button>
+          <button class="filter" data-filter="fine">Fine</button>
+          <button class="filter" data-filter="motion">Motion</button>
+        </div>
+      </div>
+
+      <div class="cinema-grid">
+        <article data-category="coarse" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_reef.mp4" type="video/mp4" /></video><span>reef scene</span></article>
+        <article data-category="fine" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_coffee_milk.mp4" type="video/mp4" /></video><span>coffee swirl</span></article>
+        <article data-category="motion" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_horse.mp4" type="video/mp4" /></video><span>horse motion</span></article>
+        <article data-category="coarse" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_lighthouse.mp4" type="video/mp4" /></video><span>lighthouse</span></article>
+        <article data-category="fine" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_clownfish.mp4" type="video/mp4" /></video><span>clownfish</span></article>
+        <article data-category="motion" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_noodles.mp4" type="video/mp4" /></video><span>noodles action</span></article>
+        <article data-category="coarse" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_flooded_road.mp4" type="video/mp4" /></video><span>flooded road</span></article>
+        <article data-category="fine" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_forest_rain.mp4" type="video/mp4" /></video><span>rain details</span></article>
+        <article data-category="motion" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_city_motion.mp4" type="video/mp4" /></video><span>city motion</span></article>
+        <article data-category="fine" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_splashing_water.mp4" type="video/mp4" /></video><span>water splash</span></article>
+        <article data-category="coarse" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_mountain_scene.mp4" type="video/mp4" /></video><span>mountain scene</span></article>
+        <article data-category="motion" class="reveal"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_long_motion.mp4" type="video/mp4" /></video><span>long motion</span></article>
+      </div>
+    </section>
+
+    <section class="closing-section">
+      <div class="closing-card reveal">
+        <p class="kicker">Anonymous resources</p>
+        <h2>Project video page and code repository</h2>
+        <div class="closing-actions">
+          <a class="button light large" href="#top">Back to top</a>
+          <a class="button dark large" href="https://anonymous.4open.science/r/Coarse_2_Refined/" target="_blank" rel="noopener">Open Code Repository</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="video-modal" aria-hidden="true">
+    <button class="modal-close" aria-label="Close video">×</button>
+    <video controls autoplay playsinline></video>
   </div>
 
-  <div class="video-block">
-    <h3>Example 2</h3>
-    <video controls>
-      <source src="assets/videos/ours.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
+  <footer>
+    <span>Anonymous supplementary page.</span>
+    <span>No author, affiliation, or contact information is included.</span>
+  </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>
