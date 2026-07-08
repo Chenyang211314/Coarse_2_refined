@@ -8,7 +8,7 @@
 :root{
   --bg:#f8f9fb; --paper:#fff; --ink:#172033; --muted:#667085; --sub:#8a94a6;
   --line:#e5e9f2; --line2:#cfd7e6; --blue:#2f5fd0; --blue2:#edf3ff;
-  --teal:#168b88; --green:#23815f; --red:#b45555; --max:1160px;
+  --teal:#168b88; --green:#23815f; --orange:#b7791f; --max:1160px;
   --shadow:0 18px 42px rgba(31,41,55,.08); --soft:0 10px 24px rgba(31,41,55,.06);
   --r:18px; --r2:12px;
 }
@@ -36,38 +36,37 @@ a{text-decoration:none;color:inherit} button{font:inherit}
 h1,h2,h3,p{margin-top:0}h1{max-width:940px;margin:0 auto 1rem;font-size:clamp(2.5rem,5vw,4.85rem);line-height:1;letter-spacing:-.065em}
 .subtitle{max-width:850px;margin:0 auto 1.2rem;color:var(--muted);font-size:clamp(1.02rem,1.7vw,1.22rem)}
 .anon{margin-bottom:1.35rem;color:var(--sub);font-size:.95rem}.hero-actions{display:flex;justify-content:center;gap:.7rem;flex-wrap:wrap}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);max-width:760px;margin:1.55rem auto 0;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.75);box-shadow:var(--soft);overflow:hidden}
-.stats div{padding:.95rem .7rem;border-right:1px solid var(--line)}.stats div:last-child{border-right:0}.stats strong{display:block;font-size:1.35rem;line-height:1;letter-spacing:-.04em}.stats span{display:block;margin-top:.3rem;color:var(--muted);font-size:.82rem}
 .teaser{margin:2.35rem auto 0;overflow:hidden;border:1px solid var(--line);border-radius:26px;background:var(--paper);box-shadow:var(--shadow);text-align:left}
 .video{position:relative;aspect-ratio:16/9;background:#111827;overflow:hidden}.video.wide{aspect-ratio:16/8.2}.video.tall{aspect-ratio:16/10.5}
 video{width:100%;height:100%;display:block;object-fit:cover;background:#111827}.teaser-caption{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;padding:1rem 1.15rem;border-top:1px solid var(--line)}
 .cap-title{font-weight:760;margin:0}.cap-sub{margin:.15rem 0 0;color:var(--muted);font-size:.92rem}.chips{display:flex;gap:.48rem;flex-wrap:wrap;justify-content:flex-end}.chip{padding:.36rem .55rem;border:1px solid var(--line);border-radius:999px;background:#f9fbff;color:var(--muted);font-size:.8rem;font-weight:720}.chip b{color:var(--blue)}
 .section{padding:3.6rem 0}.section-head{text-align:center;margin-bottom:1.45rem}.section-head.left{text-align:left}.label{display:inline-block;margin-bottom:.5rem;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;font-size:.76rem;font-weight:850}
 h2{margin-bottom:.55rem;font-size:clamp(1.7rem,3vw,2.55rem);line-height:1.08;letter-spacing:-.045em}.section-head p{max-width:760px;margin:auto;color:var(--muted)}
-.overview{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:1rem}.card{border:1px solid var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--soft)}
+.overview{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:1rem}.card{border:1px solid var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--soft)}
 .text-card{padding:1.15rem}.text-card h3{font-size:1.05rem;margin-bottom:.4rem}.text-card p{color:var(--muted);font-size:.92rem;margin:0}
 .flow{padding:1rem;background:linear-gradient(180deg,#fff,#f9fbff);border-style:dashed}.flow-row{display:grid;grid-template-columns:1fr 40px 1fr;gap:.6rem;align-items:center}.pill{text-align:center;padding:.75rem;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:760;font-size:.9rem}.arrow{display:grid;place-items:center;color:var(--blue);font-weight:900}.formula{margin:.7rem 0;padding:.7rem;border-radius:12px;background:#f1f5fb;color:#31405a;text-align:center;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86rem}
-.results{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:1rem}.video-card{overflow:hidden}.video-info{padding:.88rem 1rem 1rem}.tag{display:inline-flex;margin-bottom:.35rem;padding:.24rem .5rem;border-radius:999px;background:var(--blue2);color:#244f9e;text-transform:uppercase;letter-spacing:.08em;font-size:.71rem;font-weight:820}.video-info h3{font-size:1rem;margin:0}.video-info p{margin:.32rem 0 0;color:var(--muted);font-size:.88rem}.large{grid-row:span 2}
-.tabs{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem}.tab{cursor:pointer;border:1px solid var(--line2);border-radius:999px;background:#fff;color:var(--muted);padding:.55rem .88rem;font-weight:760}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-.panel{display:none}.panel.active{display:block}.comparison-list{display:grid;gap:1rem}.comparison-row{display:grid;grid-template-columns:215px 1fr;gap:1rem;padding:1rem}.comparison-label{display:flex;flex-direction:column;justify-content:space-between;gap:1rem;padding:1rem;border-radius:16px;background:#f9fbff;border:1px solid var(--line)}.num{color:var(--blue);font-size:.8rem;font-weight:850;letter-spacing:.08em}.comparison-label h3{margin:0;font-size:1.17rem}.comparison-label p{margin:.32rem 0 0;color:var(--muted);font-size:.88rem}.pair{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.pair figure{margin:0;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:#111827}.pair video{aspect-ratio:16/9}.pair figcaption{padding:.55rem .7rem;border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:.78rem;font-weight:820;text-transform:uppercase;letter-spacing:.08em}
-.process{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.step{position:relative;padding:1rem}.step:not(:last-child)::after{content:"→";position:absolute;top:50%;right:-.85rem;transform:translateY(-50%);display:grid;place-items:center;width:1.7rem;height:1.7rem;border:1px solid #cfe0ff;border-radius:50%;background:var(--blue2);color:var(--blue);font-weight:900;z-index:3}.step-index{display:inline-flex;margin-bottom:.75rem;padding:.3rem .55rem;border-radius:999px;background:var(--blue2);color:#244f9e;font-size:.77rem;font-weight:820}.step .video{border-radius:15px;border:1px solid var(--line)}.step h3{margin:.8rem 0 .32rem;font-size:1.05rem}.step p{margin:0;color:var(--muted);font-size:.88rem}
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.video-card{overflow:hidden}.video-info{padding:.88rem 1rem 1rem}.tag{display:inline-flex;margin-bottom:.35rem;padding:.24rem .5rem;border-radius:999px;background:var(--blue2);color:#244f9e;text-transform:uppercase;letter-spacing:.08em;font-size:.71rem;font-weight:820}.video-info h3{font-size:1rem;margin:0}.video-info p{margin:.32rem 0 0;color:var(--muted);font-size:.88rem}
+.group-title{display:flex;align-items:center;gap:.7rem;margin:2rem 0 1rem;color:var(--ink);font-weight:820}.group-title::after{content:"";height:1px;background:var(--line);flex:1}
+.comparison-list{display:grid;gap:1rem}.comparison-row{display:grid;grid-template-columns:215px 1fr;gap:1rem;padding:1rem}.comparison-label{display:flex;flex-direction:column;justify-content:space-between;gap:1rem;padding:1rem;border-radius:16px;background:#f9fbff;border:1px solid var(--line)}.num{color:var(--blue);font-size:.8rem;font-weight:850;letter-spacing:.08em}.comparison-label h3{margin:0;font-size:1.17rem}.comparison-label p{margin:.32rem 0 0;color:var(--muted);font-size:.88rem}.pair{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.pair figure{margin:0;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:#111827}.pair video{aspect-ratio:16/9}.pair figcaption{padding:.55rem .7rem;border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:.78rem;font-weight:820;text-transform:uppercase;letter-spacing:.08em}
+.schematic{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:stretch}.diagram{padding:1.2rem;background:linear-gradient(180deg,#fff,#f9fbff)}.diagram-track{position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;margin-top:.8rem}.diagram-step{position:relative;padding:1rem;border:1px solid var(--line);border-radius:15px;background:#fff}.diagram-step:not(:last-child)::after{content:"→";position:absolute;top:50%;right:-.72rem;transform:translateY(-50%);display:grid;place-items:center;width:1.44rem;height:1.44rem;border:1px solid #cfe0ff;border-radius:50%;background:var(--blue2);color:var(--blue);font-weight:900;z-index:2}.step-index{display:inline-flex;margin-bottom:.5rem;padding:.25rem .5rem;border-radius:999px;background:var(--blue2);color:#244f9e;font-size:.75rem;font-weight:820}.diagram-step h3{margin:0 0 .32rem;font-size:1rem}.diagram-step p{margin:0;color:var(--muted);font-size:.86rem}.method-notes{display:grid;gap:.8rem}.note{padding:1rem;border:1px solid var(--line);border-radius:15px;background:#fff}.note h3{margin:0 0 .34rem;font-size:1rem}.note p{margin:0;color:var(--muted);font-size:.9rem}
 .ablation{display:grid;grid-template-columns:1.15fr .85fr;gap:1rem}.ablation .video-card:first-child{grid-row:span 2}
-.gallery-tabs{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem}.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.gallery .video-card:nth-child(1),.gallery .video-card:nth-child(6){grid-column:span 2}.gallery .video-info{padding:.68rem .8rem}.gallery h3{font-size:.92rem}.hidden{display:none!important}
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.gallery .video-card:nth-child(1),.gallery .video-card:nth-child(6){grid-column:span 2}.gallery .video-info{padding:.68rem .8rem}.gallery h3{font-size:.92rem}
 .resource{display:grid;grid-template-columns:1fr auto;gap:1.2rem;align-items:center;padding:1.5rem;background:linear-gradient(135deg,rgba(47,95,208,.08),transparent 42%),#fff}.resource p{color:var(--muted);margin:0}
 footer{margin-top:1rem;border-top:1px solid var(--line);color:var(--sub);font-size:.86rem}.footer-inner{width:min(var(--max),calc(100% - 2rem));margin:auto;display:flex;justify-content:space-between;gap:1rem;padding:1.35rem 0}
 .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
 .modal{position:fixed;inset:0;z-index:60;display:none;place-items:center;padding:2rem;background:rgba(17,24,39,.84);backdrop-filter:blur(14px)}.modal.open{display:grid}.modal video{width:min(1080px,100%);max-height:82vh;border-radius:18px;border:1px solid rgba(255,255,255,.18);box-shadow:0 28px 80px rgba(0,0,0,.42);background:#000}.close{position:absolute;top:1rem;right:1rem;display:grid;place-items:center;width:2.6rem;height:2.6rem;border:1px solid rgba(255,255,255,.24);border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:1.6rem;cursor:pointer}
-@media(max-width:980px){.nav{display:none}.overview,.results,.process,.ablation{grid-template-columns:1fr}.comparison-row{grid-template-columns:1fr}.step::after{display:none!important}.gallery{grid-template-columns:repeat(2,1fr)}.resource{grid-template-columns:1fr}.large{grid-row:auto}}
-@media(max-width:640px){.actions{display:none}.hero{padding-top:2.8rem}h1{font-size:clamp(2.4rem,13vw,4rem)}.stats,.pair,.flow-row,.gallery{grid-template-columns:1fr}.stats div{border-right:0;border-bottom:1px solid var(--line)}.stats div:last-child{border-bottom:0}.teaser-caption{display:block}.chips{justify-content:flex-start;margin-top:.75rem}.footer-inner{flex-direction:column}}
+@media(max-width:980px){.nav{display:none}.overview,.results,.schematic,.ablation{grid-template-columns:1fr}.comparison-row{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}.resource{grid-template-columns:1fr}.diagram-track{grid-template-columns:1fr}.diagram-step::after{display:none!important}}
+@media(max-width:640px){.actions{display:none}.hero{padding-top:2.8rem}h1{font-size:clamp(2.4rem,13vw,4rem)}.pair,.flow-row,.gallery{grid-template-columns:1fr}.teaser-caption{display:block}.chips{justify-content:flex-start;margin-top:.75rem}.footer-inner{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
 </head>
+
 <body>
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span><span>Anonymous Project Page</span></a>
     <nav class="nav" aria-label="Main navigation">
-      <a href="#overview">Overview</a><a href="#results">Results</a><a href="#comparisons">Comparisons</a><a href="#process">Process</a><a href="#gallery">Gallery</a>
+      <a href="#overview">Overview</a><a href="#results">Results</a><a href="#comparisons">Comparisons</a><a href="#method">Method</a><a href="#gallery">Gallery</a>
     </nav>
     <div class="actions"><a class="btn soft" href="#results">Project</a><a class="btn primary" href="https://anonymous.4open.science/r/Coarse_2_Refined/" target="_blank" rel="noopener">Code</a></div>
   </div>
@@ -82,21 +81,20 @@ footer{margin-top:1rem;border-top:1px solid var(--line);color:var(--sub);font-si
   <div class="hero-actions">
     <a class="btn primary large" href="#results">View Results</a>
     <a class="btn large" href="#comparisons">See Comparisons</a>
-    <a class="btn soft large" href="https://anonymous.4open.science/r/Coarse_2_Refined/" target="_blank" rel="noopener">Code Repository</a>
+    <a class="btn soft large" href="https://anonymous.4open.science/r/Coarse_2_Refined/" target="_blank" rel="noopener">Project code</a>
   </div>
-  <div class="stats reveal"><div><strong>6</strong><span>semantic dimensions</span></div><div><strong>2</strong><span>denoising stages</span></div><div><strong>30+</strong><span>video placeholders</span></div></div>
 
   <article class="teaser reveal">
     <div class="video wide"><video controls muted playsinline preload="metadata" poster="assets/images/hero_poster.jpg"><source src="assets/videos/hero_coarse_to_refined.mp4" type="video/mp4" /></video></div>
     <div class="teaser-caption">
       <div><p class="cap-title">Teaser video</p><p class="cap-sub">Coarse semantic formation followed by fine-grained refinement.</p></div>
-      <div class="chips"><span class="chip"><b>1</b> coarse</span><span class="chip"><b>2</b> transition</span><span class="chip"><b>3</b> refined</span></div>
+      <div class="chips"><span class="chip"><b>1</b> coarse stage</span><span class="chip"><b>2</b> transition guidance</span><span class="chip"><b>3</b> refined stage</span></div>
     </div>
   </article>
 </section>
 
 <section id="overview" class="section">
-  <div class="section-head"><span class="label">Overview</span><h2>Method at a glance</h2><p>Compact academic-project layout: teaser, organized visual results, controlled comparisons, process visualization, and ablations.</p></div>
+  <div class="section-head"><span class="label">Overview</span><h2>Method at a glance</h2><p>Compact academic-project layout: teaser, organized visual results, controlled comparisons, schematic method view, and ablations.</p></div>
   <div class="overview">
     <article class="card text-card reveal"><h3>Coarse stage</h3><p>Early denoising emphasizes subject objects, spatial layout, and global motion.</p></article>
     <article class="card flow reveal"><div class="flow-row"><div class="pill">coarse prompt</div><div class="arrow">→</div><div class="pill">input prompt</div></div><div class="formula">g = 1 − cos(E(c), E(p))</div><div class="flow-row"><div class="pill">high-noise budget</div><div class="arrow">→</div><div class="pill">low-noise budget</div></div></article>
@@ -105,39 +103,52 @@ footer{margin-top:1rem;border-top:1px solid var(--line);color:var(--sub);font-si
 </section>
 
 <section id="results" class="section">
-  <div class="section-head"><span class="label">Main results</span><h2>Representative qualitative videos</h2><p>Large result panels for the strongest examples, followed by smaller videos for additional conditions.</p></div>
+  <div class="section-head"><span class="label">Main results</span><h2>Representative qualitative videos</h2><p>Representative examples are organized by prompt components. Each card is a direct video slot for the proposed method.</p></div>
   <div class="results">
-    <article class="card video-card large reveal"><div class="video tall"><video controls muted playsinline preload="metadata"><source src="assets/videos/spotlight_main.mp4" type="video/mp4" /></video></div><div class="video-info"><span class="tag">Primary sample</span><h3>Coarse structure with refined details</h3><p>Main qualitative example for the proposed inference framework.</p></div></article>
-    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/spotlight_subject_layout.mp4" type="video/mp4" /></video></div><div class="video-info"><span class="tag">Structure</span><h3>Subject and layout stability</h3></div></article>
-    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/spotlight_local_event.mp4" type="video/mp4" /></video></div><div class="video-info"><span class="tag">Fine detail</span><h3>Local event realization</h3></div></article>
-    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/spotlight_motion.mp4" type="video/mp4" /></video></div><div class="video-info"><span class="tag">Motion</span><h3>Global motion consistency</h3></div></article>
-    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/spotlight_background.mp4" type="video/mp4" /></video></div><div class="video-info"><span class="tag">Scene detail</span><h3>Background preservation</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_subject_objects.mp4" type="video/mp4" /></video></div><div class="video-info"><span class="tag">Subject objects</span><h3>Stable main object generation</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_spatial_layout.mp4" type="video/mp4" /></video></div><div class="video-info"><span class="tag">Spatial layout</span><h3>Consistent scene configuration</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_global_motion.mp4" type="video/mp4" /></video></div><div class="video-info"><span class="tag">Global motion</span><h3>Coherent motion trajectory</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_local_events.mp4" type="video/mp4" /></video></div><div class="video-info"><span class="tag">Local events</span><h3>Fine-grained event realization</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_appearance_attributes.mp4" type="video/mp4" /></video></div><div class="video-info"><span class="tag">Appearance attributes</span><h3>Accurate visual attributes</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_background_details.mp4" type="video/mp4" /></video></div><div class="video-info"><span class="tag">Background details</span><h3>Detailed scene context</h3></div></article>
   </div>
 </section>
 
 <section id="comparisons" class="section">
-  <div class="section-head"><span class="label">Comparisons</span><h2>Baseline vs. ours by semantic component</h2><p>Each row uses a compact, paper-style comparison layout to support direct visual inspection.</p></div>
-  <div class="tabs"><button class="tab active" data-panel="coarse-panel">Coarse-grained semantics</button><button class="tab" data-panel="fine-panel">Fine-grained semantics</button></div>
+  <div class="section-head"><span class="label">Comparisons</span><h2>Baseline vs. ours by prompt component</h2><p>All comparison rows are visible at once to make visual differences direct and easy to inspect. No switching is required.</p></div>
 
-  <div id="coarse-panel" class="panel active"><div class="comparison-list">
+  <div class="group-title">Coarse-structure formation</div>
+  <div class="comparison-list">
     <article class="card comparison-row reveal"><div class="comparison-label"><span class="num">01</span><div><h3>Subject objects</h3><p>Main entities remain stable across frames.</p></div></div><div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/subject_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/subject_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure></div></article>
     <article class="card comparison-row reveal"><div class="comparison-label"><span class="num">02</span><div><h3>Spatial layout</h3><p>Scene configuration is formed before local refinement.</p></div></div><div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/layout_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/layout_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure></div></article>
     <article class="card comparison-row reveal"><div class="comparison-label"><span class="num">03</span><div><h3>Global motion</h3><p>Motion trajectory is guided by the coarse prompt in early denoising.</p></div></div><div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/motion_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/motion_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure></div></article>
-  </div></div>
+  </div>
 
-  <div id="fine-panel" class="panel"><div class="comparison-list">
+  <div class="group-title">Fine-detail refinement</div>
+  <div class="comparison-list">
     <article class="card comparison-row reveal"><div class="comparison-label"><span class="num">04</span><div><h3>Local events</h3><p>Later denoising allocates budget for local interactions and events.</p></div></div><div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/events_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/events_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure></div></article>
     <article class="card comparison-row reveal"><div class="comparison-label"><span class="num">05</span><div><h3>Appearance attributes</h3><p>Fine visual attributes are refined after global structure is established.</p></div></div><div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/appearance_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/appearance_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure></div></article>
     <article class="card comparison-row reveal"><div class="comparison-label"><span class="num">06</span><div><h3>Background details</h3><p>Background components are retained without destabilizing the main layout.</p></div></div><div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/background_baseline.mp4" type="video/mp4" /></video><figcaption>Baseline</figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/background_ours.mp4" type="video/mp4" /></video><figcaption>Ours</figcaption></figure></div></article>
-  </div></div>
+  </div>
 </section>
 
-<section id="process" class="section">
-  <div class="section-head"><span class="label">Process</span><h2>Coarse-to-refined sampling trajectory</h2><p>A concise process board for showing how the two-stage generation develops visually.</p></div>
-  <div class="process">
-    <article class="card step reveal"><span class="step-index">Stage 1</span><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/process_coarse_stage.mp4" type="video/mp4" /></video></div><h3>Coarse denoising</h3><p>High-noise updates establish the main semantic configuration.</p></article>
-    <article class="card step reveal"><span class="step-index">Transition</span><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/process_transition_guidance.mp4" type="video/mp4" /></video></div><h3>CRTG transition</h3><p>The latent is shifted toward a refinement-friendly state.</p></article>
-    <article class="card step reveal"><span class="step-index">Stage 2</span><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/process_refined_stage.mp4" type="video/mp4" /></video></div><h3>Refined denoising</h3><p>Low-noise updates recover local events, attributes, and background details.</p></article>
+<section id="method" class="section">
+  <div class="section-head"><span class="label">Method schematic</span><h2>Coarse-to-refined inference flow</h2><p>This section is intentionally diagram-based rather than video-based, so it can explain the trajectory without requiring an additional process video.</p></div>
+  <div class="schematic">
+    <article class="card diagram reveal">
+      <div class="diagram-track">
+        <div class="diagram-step"><span class="step-index">Stage 1</span><h3>Coarse denoising</h3><p>Use the simplified prompt at high noise to form subject, layout, and global motion.</p></div>
+        <div class="diagram-step"><span class="step-index">Transition</span><h3>CRTG</h3><p>Use conditional prediction difference to shift the intermediate latent.</p></div>
+        <div class="diagram-step"><span class="step-index">Stage 2</span><h3>Refined denoising</h3><p>Use the input prompt at low noise to refine events, attributes, and details.</p></div>
+      </div>
+      <div class="formula">d<sub>crtg</sub> = d<sub>c</sub> + λ(d<sub>p</sub> − d<sub>c</sub>)</div>
+    </article>
+
+    <article class="method-notes reveal">
+      <div class="note"><h3>Semantic-gap scheduling</h3><p>The transition point is determined by the gap between the coarse prompt and the input prompt.</p></div>
+      <div class="note"><h3>Sampling-budget reallocation</h3><p>Early steps are biased toward high-noise structure formation; later steps are biased toward low-noise detail refinement.</p></div>
+      <div class="note"><h3>Prompt roles</h3><p>The coarse prompt stabilizes the main configuration, while the input prompt completes fine-grained constraints.</p></div>
+    </article>
   </div>
 </section>
 
@@ -151,19 +162,18 @@ footer{margin-top:1rem;border-top:1px solid var(--line);color:var(--sub);font-si
 </section>
 
 <section id="gallery" class="section">
-  <div class="section-head"><span class="label">Gallery</span><h2>Additional qualitative results</h2><p>A dense visual grid for extra examples. Filter buttons keep the page organized without adding much text.</p></div>
-  <div class="gallery-tabs"><button class="tab active" data-filter="all">All</button><button class="tab" data-filter="coarse">Coarse</button><button class="tab" data-filter="fine">Fine</button><button class="tab" data-filter="motion">Motion</button></div>
+  <div class="section-head"><span class="label">Gallery</span><h2>Additional qualitative results</h2><p>Additional videos produced by the proposed method. This gallery does not use category filters, so all examples remain directly visible.</p></div>
   <div class="gallery">
-    <article class="card video-card reveal" data-category="coarse"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_reef.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Reef scene</h3></div></article>
-    <article class="card video-card reveal" data-category="fine"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_coffee_milk.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Coffee swirl</h3></div></article>
-    <article class="card video-card reveal" data-category="motion"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_horse.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Horse motion</h3></div></article>
-    <article class="card video-card reveal" data-category="coarse"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_lighthouse.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Lighthouse</h3></div></article>
-    <article class="card video-card reveal" data-category="fine"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_clownfish.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Clownfish</h3></div></article>
-    <article class="card video-card reveal" data-category="motion"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_noodles.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Noodles action</h3></div></article>
-    <article class="card video-card reveal" data-category="coarse"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_flooded_road.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Flooded road</h3></div></article>
-    <article class="card video-card reveal" data-category="fine"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_forest_rain.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Rain details</h3></div></article>
-    <article class="card video-card reveal" data-category="motion"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_city_motion.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>City motion</h3></div></article>
-    <article class="card video-card reveal" data-category="fine"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/gallery_splashing_water.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Water splash</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_gallery_01.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Ours example 01</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_gallery_02.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Ours example 02</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_gallery_03.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Ours example 03</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_gallery_04.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Ours example 04</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_gallery_05.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Ours example 05</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_gallery_06.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Ours example 06</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_gallery_07.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Ours example 07</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_gallery_08.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Ours example 08</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_gallery_09.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Ours example 09</h3></div></article>
+    <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ours_gallery_10.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Ours example 10</h3></div></article>
   </div>
 </section>
 
@@ -182,8 +192,6 @@ footer{margin-top:1rem;border-top:1px solid var(--line);color:var(--sub);font-si
 <script>
 const revealObserver=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting)entry.target.classList.add("visible")})},{threshold:.12});
 document.querySelectorAll(".reveal").forEach((el)=>revealObserver.observe(el));
-document.querySelectorAll(".tabs .tab").forEach((tab)=>{tab.addEventListener("click",()=>{const target=tab.dataset.panel;document.querySelectorAll(".tabs .tab").forEach((t)=>t.classList.toggle("active",t===tab));document.querySelectorAll(".panel").forEach((p)=>p.classList.toggle("active",p.id===target))})});
-document.querySelectorAll(".gallery-tabs .tab").forEach((tab)=>{tab.addEventListener("click",()=>{const target=tab.dataset.filter;document.querySelectorAll(".gallery-tabs .tab").forEach((t)=>t.classList.toggle("active",t===tab));document.querySelectorAll(".gallery .video-card").forEach((card)=>{card.classList.toggle("hidden",!(target==="all"||card.dataset.category===target))})})});
 const modal=document.querySelector(".modal"),modalVideo=modal.querySelector("video"),closeButton=modal.querySelector(".close");
 document.querySelectorAll("video").forEach((video)=>{video.addEventListener("dblclick",()=>{const src=video.currentSrc||video.querySelector("source")?.src;if(!src)return;modalVideo.src=src;modal.classList.add("open");modal.setAttribute("aria-hidden","false");modalVideo.play().catch(()=>{})})});
 function closeModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");modalVideo.pause();modalVideo.removeAttribute("src")}
