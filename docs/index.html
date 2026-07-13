@@ -232,6 +232,87 @@ h2{
   background:var(--paper);
   box-shadow:var(--soft);
 }
+.method-figure{
+  overflow:hidden;
+  margin-bottom:1rem;
+}
+.method-figure img{
+  width:100%;
+  display:block;
+  object-fit:contain;
+  background:#f9fbff;
+}
+.method-figure .figure-fallback{
+  min-height:260px;
+  display:grid;
+  place-items:center;
+  padding:2rem;
+  background:linear-gradient(135deg,rgba(47,95,208,.08),rgba(22,139,136,.06));
+  color:var(--muted);
+  text-align:center;
+  font-weight:760;
+}
+.method-figure figcaption{
+  padding:.8rem 1rem;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:.9rem;
+}
+.gap-note{
+  margin:.55rem 0 .7rem;
+  color:var(--muted);
+  font-size:.84rem;
+  line-height:1.42;
+  text-align:center;
+}
+.sampling-card{
+  margin-top:1rem;
+  padding:1rem;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:1rem;
+  align-items:center;
+}
+.sampling-card h3{
+  margin:0 0 .38rem;
+  font-size:1.05rem;
+}
+.sampling-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:.9rem;
+}
+.sampling-formula{
+  margin:.72rem 0 0;
+  padding:.7rem;
+  border-radius:12px;
+  background:#f1f5fb;
+  color:#31405a;
+  text-align:center;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.86rem;
+}
+.sampling-figure{
+  min-height:170px;
+  display:grid;
+  place-items:center;
+  border:1px dashed var(--line2);
+  border-radius:14px;
+  background:#fbfcff;
+  overflow:hidden;
+}
+.sampling-figure img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+.sampling-figure span{
+  padding:1rem;
+  color:var(--muted);
+  text-align:center;
+  font-weight:760;
+}
 .method-compact{
   display:grid;
   grid-template-columns:1fr 1.15fr 1fr;
@@ -420,6 +501,75 @@ h2{
   grid-template-columns:repeat(4,1fr);
   gap:1rem;
 }
+.compact-comparison-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1rem;
+}
+.compact-comparison-card{
+  overflow:hidden;
+}
+.compact-prompt{
+  min-height:7.2rem;
+  max-height:8.8rem;
+  overflow:auto;
+  padding:.82rem .9rem;
+  border-bottom:1px solid var(--line);
+  background:#fff;
+  color:#536074;
+  font-size:.86rem;
+  line-height:1.45;
+}
+.compact-prompt strong{
+  color:#2f3b50;
+}
+.compact-prompt .hl{
+  display:inline;
+  padding:.04rem .18rem;
+  border-radius:.32rem;
+  color:#1f4f9c;
+  background:#edf3ff;
+  font-weight:900;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
+}
+.compact-pair{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  border-top:1px solid var(--line);
+}
+.compact-pair figure{
+  display:flex;
+  flex-direction:column;
+  margin:0;
+  min-width:0;
+  background:#111827;
+}
+.compact-pair figure:first-child{
+  border-right:1px solid var(--line);
+}
+.compact-pair figcaption{
+  order:-1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:2.3rem;
+  padding:.55rem .65rem;
+  border-bottom:1px solid var(--line);
+  background:#fff;
+  font-size:.78rem;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.compact-pair video{
+  width:100%;
+  height:auto;
+  aspect-ratio:16/9;
+  object-fit:contain;
+  background:#111827;
+}
 .video-card{overflow:hidden}
 .video-info{
   padding:.82rem .9rem .92rem;
@@ -521,17 +671,21 @@ footer{
 }
 @media(max-width:1080px){
   .nav{display:none}
-  .method-compact,.ablation{grid-template-columns:1fr}
+  .method-compact,.sampling-card,.ablation{grid-template-columns:1fr}
   .comparison-row{grid-template-columns:1fr}
   .results-grid{grid-template-columns:repeat(2,1fr)}
+  .compact-comparison-grid{grid-template-columns:1fr}
 }
 @media(max-width:640px){
   .actions{display:none}
   .hero{padding-top:2.8rem}
   h1{font-size:clamp(2.15rem,11vw,3.5rem)}
   h2{font-size:clamp(2rem,10vw,3rem)}
-  .pair,.flow-row,.results-grid{grid-template-columns:1fr}
+  .pair,.flow-row,.results-grid,.compact-comparison-grid{grid-template-columns:1fr}
   .pair figcaption{justify-content:center;gap:.5rem;flex-wrap:wrap}
+  .compact-pair{grid-template-columns:1fr}
+  .compact-pair figure:first-child{border-right:0;border-bottom:1px solid var(--line)}
+  .compact-prompt{min-height:auto;max-height:none}
   .teaser-caption{display:block}
   .chips{justify-content:flex-start;margin-top:.75rem}
   .resource{grid-template-columns:1fr}
@@ -595,34 +749,56 @@ footer{
 
 <section id="method" class="section">
   <div class="section-head">    <h2>Method Overview</h2>
-    <p>The method separates early coarse-grained semantic formation from later fine-grained constraint realization, while adapting the transition point and sampling budget to the prompt gap.</p>
+    <p>The method first derives a coarse prompt from the full input prompt, estimates the semantic gap between the two prompts, transfers the coarse trajectory to the refined stage with CRTG, and reallocates sampling steps across high- and low-noise regions.</p>
   </div>
+
+  <figure class="card method-figure reveal">
+    <img src="assets/images/method_overview.png" alt="Overview of the coarse-to-refined inference framework" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';" />
+    <div class="figure-fallback" style="display:none;">Place method overview image here<br />assets/images/method_overview.png</div>
+    <figcaption>Overview placeholder for the complete staged-semantics inference pipeline.</figcaption>
+  </figure>
 
   <div class="method-compact">
     <article class="card method-card reveal">
-      <h3>Stage 1: coarse formation</h3>
-      <p>The simplified prompt guides primary objects, spatial layout, and global motion in the high-noise region.</p>
+      <h3>Prompt inference and staged semantics</h3>
+      <div class="flow-row">
+        <div class="pill">input prompt p</div>
+        <div class="arrow">→</div>
+        <div class="pill">coarse prompt c</div>
+      </div>
+      <p style="margin-top:.72rem;">The simplified prompt guides primary objects, spatial layout, and global motion during high-noise coarse formation; the full prompt later guides local events, appearance attributes, and background details during low-noise refinement.</p>
     </article>
 
     <article class="card flow reveal">
-      <div class="flow-row">
-        <div class="pill">coarse prompt c</div>
-        <div class="arrow">→</div>
-        <div class="pill">input prompt p</div>
-      </div>
+      <h3 style="margin:0 0 .55rem;font-size:1.05rem;">Semantic-gap adaptive transition</h3>
       <div class="formula">g = 1 − cos(E(c), E(p))</div>
-      <div class="flow-row">
-        <div class="pill">high-noise allocation</div>
-        <div class="arrow">→</div>
-        <div class="pill">low-noise allocation</div>
-      </div>
+      <p class="gap-note">The semantic gap measures how much fine-grained or additional content is introduced by the input prompt beyond the coarse prompt; a larger gap indicates a stronger need to adapt the transition point between the two stages.</p>
     </article>
 
     <article class="card method-card reveal">
-      <h3>Stage 2: detail refinement</h3>
-      <p>The full prompt guides local events, appearance attributes, and background details in the low-noise region.</p>
+      <h3>CRTG latent transition</h3>
+      <p>At the stage boundary, CRTG treats the coarse-stage trajectory as a structural anchor and steers the transition from the coarse prompt to the full prompt.</p>
+      <div class="formula">d<sub>crtg</sub> = d<sub>c</sub> + λ<sub>crtg</sub>(d<sub>p</sub> − d<sub>c</sub>)</div>
+      <p style="margin-top:.72rem;">Here, d<sub>c</sub> and d<sub>p</sub> denote the model directions induced by the coarse prompt and the full prompt, respectively, without tying the notation to a specific prediction parameterization such as velocity or noise. The transition direction interpolates from coarse semantics toward full-prompt semantics, preserving the global configuration while enabling later fine-grained refinement.</p>
     </article>
   </div>
+
+  <article class="card sampling-card reveal">
+    <div>
+      <h3>Sampling-budget reallocation</h3>
+      <p>The timestep sequence is redistributed along the noise axis without changing the total number of sampling steps. High-noise-oriented reallocation supports coarse semantic formation, while low-noise-oriented reallocation supports fine-grained refinement.</p>
+      <div class="flow-row" style="margin-top:.75rem;">
+        <div class="pill">high-noise sampling reallocation</div>
+        <div class="arrow">→</div>
+        <div class="pill">low-noise sampling reallocation</div>
+      </div>
+      <div class="sampling-formula">φ<sub>r</sub>(t) = rt / (1 + (r − 1)t)</div>
+    </div>
+    <div class="sampling-figure">
+      <img src="assets/images/sampling_reallocation.png" alt="Sampling-budget reallocation illustration" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+      <span style="display:none;">Place sampling reallocation figure here<br />assets/images/sampling_reallocation.png</span>
+    </div>
+  </article>
 </section>
 
 <section id="comparisons" class="section">
@@ -666,36 +842,36 @@ footer{
   </div>
 
   <div class="model-block">
-    <h3 class="model-heading">Base Model II</h3>
+    <h3 class="model-heading">CogVideoX-5B</h3>
     <div class="comparison-list">
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">01</span><div><h3>Subject objects</h3><p>Main entities remain stable across frames.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_subject_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>Base Model II</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_subject_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>Base Model II</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">02</span><div><h3>Spatial layout</h3><p>Scene configuration is formed before local refinement.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_layout_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>Base Model II</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_layout_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>Base Model II</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">03</span><div><h3>Global motion</h3><p>Motion trajectory is guided by coarse semantics in early denoising.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_motion_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>Base Model II</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_motion_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>Base Model II</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">04</span><div><h3>Local events</h3><p>Later denoising allocates capacity to local interactions and events.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_events_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>Base Model II</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_events_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>Base Model II</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">05</span><div><h3>Appearance attributes</h3><p>Fine visual attributes are refined after global structure is established.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_appearance_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>Base Model II</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_appearance_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>Base Model II</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">06</span><div><h3>Background details</h3><p>Background details are improved without destabilizing the main layout.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_background_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>Base Model II</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_background_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>Base Model II</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
       </article>
     </div>
   </div>
@@ -703,34 +879,96 @@ footer{
 
 <section id="more-results" class="section">
   <div class="section-head">    <h2>More Qualitative Results</h2>
-    <p>Additional examples generated with the proposed method. These results are separated by base model and are intended for broader visual inspection.</p>
+    <p>Additional baseline-versus-ours comparisons. Each compact card keeps the prompt, baseline video, and our result together for direct visual inspection.</p>
   </div>
 
   <div class="model-block">
-    <h3 class="model-heading">Base Model I · Ours</h3>
-    <div class="results-grid">
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_a_gallery_01.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example A1</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_a_gallery_02.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example A2</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_a_gallery_03.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example A3</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_a_gallery_04.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example A4</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_a_gallery_05.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example A5</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_a_gallery_06.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example A6</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_a_gallery_07.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example A7</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_a_gallery_08.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example A8</h3></div></article>
+    <h3 class="model-heading">Wan2.2-5B · Additional Comparisons</h3>
+    <div class="compact-comparison-grid">
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> A green sea turtle swims over coral in a tropical reef, where branching coral rises below its shell, striped reef fish pass beside it, and sun rays filter through clear blue water.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_01_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_01_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> A river floods over its banks beside a rural road, carrying muddy water and grass clumps past fence posts and a half-submerged mailbox.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_02_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_02_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> A person in a yellow ski suit skis from the top of a slope to the bottom at a large ski resort, with many people on the slopes under sunny weather.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_03_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_03_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> White milk swirls into black coffee inside a clear cup, forming curved patterns that fade into light brown liquid.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_04_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_04_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> A lighthouse stands on the ocean shore, with a tall white tower, rocky coast, waves breaking below, and open sea stretching behind it.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_05_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_05_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> A black dog runs happily across a yellow grassy field, with a clear blue sky and some trees in the background.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_06_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_06_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this Wan2.2-5B comparison.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_07_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_07_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this Wan2.2-5B comparison.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_08_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/more_wan_08_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
     </div>
   </div>
 
   <div class="model-block">
-    <h3 class="model-heading">Base Model II · Ours</h3>
-    <div class="results-grid">
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_gallery_01.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example B1</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_gallery_02.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example B2</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_gallery_03.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example B3</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_gallery_04.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example B4</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_gallery_05.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example B5</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_gallery_06.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example B6</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_gallery_07.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example B7</h3></div></article>
-      <article class="card video-card reveal"><div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/model_b_gallery_08.mp4" type="video/mp4" /></video></div><div class="video-info"><h3>Example B8</h3></div></article>
+    <h3 class="model-heading">CogVideoX-5B · Additional Comparisons</h3>
+    <div class="compact-comparison-grid">
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_01_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_01_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_02_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_02_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_03_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_03_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_04_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_04_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_05_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_05_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_06_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_06_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_07_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_07_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
+
+      <article class="card compact-comparison-card reveal">
+        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_08_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_08_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+      </article>
     </div>
   </div>
 </section>
