@@ -170,7 +170,7 @@ video{
   width:100%;
   height:100%;
   display:block;
-  object-fit:cover;
+  object-fit:contain; /* preserve the full video frame; do not crop */
   background:#111827;
 }
 .teaser-caption{
@@ -502,7 +502,9 @@ footer{
 .modal.open{display:grid}
 .modal video{
   width:min(1080px,100%);
+  height:auto;
   max-height:82vh;
+  object-fit:contain;
   border-radius:18px;
   border:1px solid rgba(255,255,255,.18);
   box-shadow:0 28px 80px rgba(0,0,0,.42);
