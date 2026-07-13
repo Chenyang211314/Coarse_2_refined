@@ -314,6 +314,7 @@ h2{
   grid-template-columns:230px 1fr;
   gap:1rem;
   padding:1rem;
+  align-items:start;
 }
 .comparison-label{
   display:flex;
@@ -367,9 +368,13 @@ h2{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:.8rem;
+  align-items:start;
 }
 .pair figure{
   position:relative;
+  display:flex;
+  flex-direction:column;
+  align-self:start;
   margin:0;
   overflow:hidden;
   border:1px solid var(--line);
@@ -377,35 +382,24 @@ h2{
   background:#111827;
 }
 .pair figure::before{
-  position:absolute;
-  top:.65rem;
-  left:.65rem;
-  z-index:5;
-  padding:.34rem .62rem;
-  border-radius:999px;
-  color:#fff;
-  font-size:.76rem;
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  box-shadow:0 8px 20px rgba(17,24,39,.22);
+  display:none;
 }
-.pair figure:first-child::before{
-  content:"Baseline";
-  background:rgba(123,90,38,.92);
+.pair video{
+  width:100%;
+  height:auto;
+  aspect-ratio:16/9;
+  object-fit:contain;
+  background:#111827;
 }
-.pair figure:nth-child(2)::before{
-  content:"Ours";
-  background:rgba(31,106,82,.94);
-}
-.pair video{aspect-ratio:16/9}
 .pair figcaption{
+  order:-1;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:.8rem;
-  padding:.68rem .78rem;
-  border-top:1px solid var(--line);
+  min-height:2.55rem;
+  padding:.62rem .78rem;
+  border-bottom:1px solid var(--line);
   background:#fff;
   color:var(--muted);
   font-size:.8rem;
@@ -537,6 +531,7 @@ footer{
   h1{font-size:clamp(2.15rem,11vw,3.5rem)}
   h2{font-size:clamp(2rem,10vw,3rem)}
   .pair,.flow-row,.results-grid{grid-template-columns:1fr}
+  .pair figcaption{justify-content:center;gap:.5rem;flex-wrap:wrap}
   .teaser-caption{display:block}
   .chips{justify-content:flex-start;margin-top:.75rem}
   .resource{grid-template-columns:1fr}
