@@ -133,9 +133,9 @@ h1,h2,h3,p{margin-top:0}
 h1{
   max-width:980px;
   margin:0 auto 1rem;
-  font-size:clamp(2.05rem,4.15vw,3.85rem);
-  line-height:1.05;
-  letter-spacing:-.055em;
+  font-size:clamp(1.75rem,3.15vw,2.8rem);
+  line-height:1.08;
+  letter-spacing:-.045em;
 }
 .subtitle{
   max-width:860px;
@@ -215,16 +215,16 @@ video{
   font-weight:850;
 }
 h2{
-  margin-bottom:.58rem;
-  font-size:clamp(2.15rem,4.1vw,3.65rem);
-  line-height:1.04;
-  letter-spacing:-.058em;
+  margin-bottom:.52rem;
+  font-size:clamp(1.72rem,3vw,2.55rem);
+  line-height:1.08;
+  letter-spacing:-.045em;
 }
 .section-head p{
   max-width:790px;
   margin:auto;
   color:var(--muted);
-  font-size:1.02rem;
+  font-size:.96rem;
 }
 .card{
   border:1px solid var(--line);
@@ -510,15 +510,15 @@ h2{
   overflow:hidden;
 }
 .compact-prompt{
-  min-height:7.2rem;
-  max-height:8.8rem;
+  min-height:5.25rem;
+  max-height:6.6rem;
   overflow:auto;
-  padding:.82rem .9rem;
+  padding:.62rem .82rem;
   border-bottom:1px solid var(--line);
   background:#fff;
   color:#536074;
-  font-size:.86rem;
-  line-height:1.45;
+  font-size:.84rem;
+  line-height:1.38;
 }
 .compact-prompt strong{
   color:#2f3b50;
@@ -537,7 +537,7 @@ h2{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:0;
-  border-top:1px solid var(--line);
+  border-top:0;
 }
 .compact-pair figure{
   display:flex;
@@ -554,8 +554,8 @@ h2{
   display:flex;
   align-items:center;
   justify-content:center;
-  min-height:2.3rem;
-  padding:.55rem .65rem;
+  min-height:2.1rem;
+  padding:.46rem .6rem;
   border-bottom:1px solid var(--line);
   background:#fff;
   font-size:.78rem;
@@ -679,13 +679,13 @@ footer{
 @media(max-width:640px){
   .actions{display:none}
   .hero{padding-top:2.8rem}
-  h1{font-size:clamp(2.15rem,11vw,3.5rem)}
-  h2{font-size:clamp(2rem,10vw,3rem)}
+  h1{font-size:clamp(1.85rem,8.8vw,2.7rem)}
+  h2{font-size:clamp(1.6rem,8vw,2.35rem)}
   .pair,.flow-row,.results-grid,.compact-comparison-grid{grid-template-columns:1fr}
   .pair figcaption{justify-content:center;gap:.5rem;flex-wrap:wrap}
   .compact-pair{grid-template-columns:1fr}
   .compact-pair figure:first-child{border-right:0;border-bottom:1px solid var(--line)}
-  .compact-prompt{min-height:auto;max-height:none}
+  .compact-prompt{min-height:auto;max-height:none;padding:.6rem .75rem}
   .teaser-caption{display:block}
   .chips{justify-content:flex-start;margin-top:.75rem}
   .resource{grid-template-columns:1fr}
