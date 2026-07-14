@@ -258,11 +258,11 @@ h2{
   font-size:.9rem;
 }
 .gap-note{
-  margin:.55rem 0 .7rem;
+  margin:.55rem 0 0;
   color:var(--muted);
-  font-size:.84rem;
-  line-height:1.42;
-  text-align:center;
+  font-size:.86rem;
+  line-height:1.45;
+  text-align:left;
 }
 .sampling-card{
   margin-top:1rem;
@@ -314,11 +314,18 @@ h2{
 }
 .method-compact{
   display:grid;
-  grid-template-columns:1fr 1.15fr 1fr;
+  grid-template-columns:repeat(3,1fr);
   gap:1rem;
+  align-items:stretch;
+}
+.method-compact > .card{
+  height:100%;
+  min-height:238px;
 }
 .method-card{
   padding:1.15rem;
+  display:flex;
+  flex-direction:column;
 }
 .method-card h3{
   margin:0 0 .42rem;
@@ -330,9 +337,11 @@ h2{
   font-size:.92rem;
 }
 .flow{
-  padding:1rem;
+  padding:1.15rem;
   background:linear-gradient(180deg,#fff,#f9fbff);
   border-style:dashed;
+  display:flex;
+  flex-direction:column;
 }
 .flow-row{
   display:grid;
@@ -759,20 +768,20 @@ footer{
         <div class="arrow">→</div>
         <div class="pill">coarse prompt c</div>
       </div>
-      <p style="margin-top:.72rem;">The simplified prompt guides primary objects, spatial layout, and global motion during high-noise coarse formation; the full prompt later guides local events, appearance attributes, and background details during low-noise refinement.</p>
+      <p style="margin-top:.72rem;">The input prompt is simplified into a coarse prompt. The coarse prompt controls primary objects, spatial layout, and global motion in the high-noise stage; the full prompt then restores local events, appearance attributes, and background details in the low-noise stage.</p>
     </article>
 
     <article class="card flow reveal">
       <h3 style="margin:0 0 .55rem;font-size:1.05rem;">Semantic-gap adaptive transition</h3>
       <div class="formula">g = 1 − cos(E(c), E(p))</div>
-      <p class="gap-note">The semantic gap measures how much fine-grained or additional content is introduced by the input prompt beyond the coarse prompt; a larger gap indicates a stronger need to adapt the transition point between the two stages.</p>
+      <p class="gap-note">The semantic gap estimates how much fine-grained information the full prompt adds beyond the coarse prompt. This gap determines when the inference should leave coarse semantic formation and enter full-prompt refinement.</p>
     </article>
 
     <article class="card method-card reveal">
       <h3>CRTG latent transition</h3>
-      <p>At the stage boundary, CRTG treats the coarse-stage trajectory as a structural anchor and steers the transition from the coarse prompt to the full prompt.</p>
+      <p>At the stage boundary, CRTG converts the current coarse-stage latent into a state suitable for continued denoising under the full prompt, so the refined stage can start from a stable latent instead of an abrupt prompt switch.</p>
       <div class="formula">d<sub>crtg</sub> = d<sub>c</sub> + λ<sub>crtg</sub>(d<sub>p</sub> − d<sub>c</sub>)</div>
-      <p style="margin-top:.72rem;">Here, d<sub>c</sub> and d<sub>p</sub> denote the model directions induced by the coarse prompt and the full prompt, respectively, without tying the notation to a specific prediction parameterization such as velocity or noise. The transition direction interpolates from coarse semantics toward full-prompt semantics, preserving the global configuration while enabling later fine-grained refinement.</p>
+      <p style="margin-top:.72rem;">The transition direction moves the latent from coarse semantics toward fine-grained semantics while preserving the formed global configuration; without this transition, the second-stage sampling can destabilize the scene.</p>
     </article>
   </div>
 
