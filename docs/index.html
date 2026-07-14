@@ -331,6 +331,35 @@ h2{
   margin:0 0 .42rem;
   font-size:1.05rem;
 }
+.contrib-heading{
+  display:flex;
+  flex-direction:column;
+  gap:.18rem;
+  margin:0 0 .62rem;
+  line-height:1.18;
+}
+.contrib-index{
+  color:var(--blue);
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  font-size:.72rem;
+  font-weight:900;
+}
+.contrib-name{
+  color:var(--ink);
+  font-size:1.02rem;
+  font-weight:850;
+  letter-spacing:-.02em;
+}
+.prompt-flow{
+  grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);
+  gap:.28rem;
+}
+.prompt-flow .pill{
+  white-space:nowrap;
+  padding:.6rem .34rem;
+  font-size:.78rem;
+}
 .method-card p{
   margin:0;
   color:var(--muted);
@@ -365,8 +394,8 @@ h2{
   font-weight:900;
 }
 .formula{
-  margin:.7rem 0;
-  padding:.7rem;
+  margin:.62rem 0;
+  padding:.68rem;
   border-radius:12px;
   background:#f1f5fb;
   color:#31405a;
@@ -605,11 +634,32 @@ h2{
 }
 .ablation{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
   gap:1rem;
 }
-.ablation .video-card:first-child{
-  grid-column:span 2;
+.ablation-top{
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr);
+  gap:1rem;
+  align-items:center;
+}
+.ablation-stack{
+  display:grid;
+  grid-template-rows:auto auto;
+  gap:1rem;
+  align-self:center;
+}
+.full-method{
+  align-self:center;
+}
+.ablation-pair{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+}
+.ablation-pair .video-card,
+.ablation-stack .video-card,
+.ablation .video-card{
+  height:100%;
 }
 .resource{
   display:grid;
@@ -681,7 +731,8 @@ footer{
 }
 @media(max-width:1080px){
   .method-compact,.sampling-card{grid-template-columns:1fr}
-  .ablation{grid-template-columns:repeat(2,1fr)}
+  .ablation-top{grid-template-columns:1fr}
+  .ablation-stack{grid-template-columns:1fr 1fr;grid-template-rows:auto}
   .comparison-row{grid-template-columns:1fr}
   .results-grid{grid-template-columns:repeat(2,1fr)}
   .compact-comparison-grid{grid-template-columns:1fr}
@@ -701,7 +752,7 @@ footer{
   .compact-prompt{min-height:auto;max-height:none;padding:.6rem .75rem}
   .teaser-caption{display:block}
   .chips{justify-content:flex-start;margin-top:.75rem}
-  .ablation .video-card:first-child{grid-column:span 1}
+  .ablation-stack,.ablation-pair{grid-template-columns:1fr}
   .resource{grid-template-columns:1fr}
   .footer-inner{flex-direction:column}
 }
@@ -751,7 +802,6 @@ footer{
 
 <section id="method" class="section">
   <div class="section-head">    <h2>Method Overview</h2>
-    <p>The method first derives a coarse prompt from the full input prompt, estimates the semantic gap between the two prompts, transfers the coarse trajectory to the refined stage with CRTG, and reallocates sampling steps across high- and low-noise regions.</p>
   </div>
 
   <figure class="card method-figure reveal">
@@ -762,37 +812,37 @@ footer{
 
   <div class="method-compact">
     <article class="card method-card reveal">
-      <h3>Prompt inference and staged semantics</h3>
-      <div class="flow-row">
-        <div class="pill">input prompt p</div>
+      <h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅰ</span><span class="contrib-name">Coarse-to-Fine Semantic Staging</span></h3>
+      <div class="flow-row prompt-flow">
+        <div class="pill">input&nbsp;prompt&nbsp;p</div>
         <div class="arrow">→</div>
-        <div class="pill">coarse prompt c</div>
+        <div class="pill">coarse&nbsp;prompt&nbsp;c</div>
       </div>
-      <p style="margin-top:.72rem;">The input prompt is simplified into a coarse prompt. The coarse prompt controls primary objects, spatial layout, and global motion in the high-noise stage; the full prompt then restores local events, appearance attributes, and background details in the low-noise stage.</p>
+      <p style="margin-top:.72rem;">The framework separates early coarse-grained semantic formation from later fine-grained constraint realization. The coarse prompt controls primary objects, spatial layout, and global motion; the full prompt later restores local events, appearance attributes, and background details.</p>
     </article>
 
     <article class="card flow reveal">
-      <h3 style="margin:0 0 .55rem;font-size:1.05rem;">Semantic-gap adaptive transition</h3>
+      <h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅱ</span><span class="contrib-name">Semantic-Gap-Adaptive Prompt Scheduling</span></h3>
       <div class="formula">g = 1 − cos(E(c), E(p))</div>
-      <p class="gap-note">The semantic gap estimates how much fine-grained information the full prompt adds beyond the coarse prompt. This gap determines when the inference should leave coarse semantic formation and enter full-prompt refinement.</p>
+      <p class="gap-note">The semantic gap estimates the prompt-dependent increment from c to p and determines the coarse-stage duration, avoiding a fixed transition point that is either too early or too late across different prompts.</p>
     </article>
 
     <article class="card method-card reveal">
-      <h3>CRTG latent transition</h3>
-      <p>At the stage boundary, CRTG converts the current coarse-stage latent into a state suitable for continued denoising under the full prompt, so the refined stage can start from a stable latent instead of an abrupt prompt switch.</p>
+      <h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅲ</span><span class="contrib-name">Coarse-to-Refined Transition Guidance</span></h3>
+      <p>CRTG adjusts the intermediate latent before fine-grained sampling, converting the coarse-stage state into a stable starting point for continued denoising under the full prompt.</p>
       <div class="formula">d<sub>crtg</sub> = d<sub>c</sub> + λ<sub>crtg</sub>(d<sub>p</sub> − d<sub>c</sub>)</div>
-      <p style="margin-top:.72rem;">The transition direction moves the latent from coarse semantics toward fine-grained semantics while preserving the formed global configuration; without this transition, the second-stage sampling can destabilize the scene.</p>
+      <p style="margin-top:.72rem;">This transition preserves the formed global configuration while moving the latent toward a state where fine-grained constraints can still influence the remaining trajectory.</p>
     </article>
   </div>
 
   <article class="card sampling-card reveal">
     <div>
-      <h3>Sampling-budget reallocation</h3>
-      <p>The timestep sequence is redistributed along the noise axis without changing the total number of sampling steps. High-noise-oriented reallocation supports coarse semantic formation, while low-noise-oriented reallocation supports fine-grained refinement.</p>
-      <div class="flow-row" style="margin-top:.75rem;">
-        <div class="pill">high-noise sampling reallocation</div>
+      <h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅳ</span><span class="contrib-name">Sampling-Budget Reallocation</span></h3>
+      <p>The fixed sampling budget is redistributed along the noise axis. High-noise-oriented allocation gives denser updates to coarse semantic formation, while low-noise-oriented allocation reserves capacity for fine-grained refinement.</p>
+      <div class="flow-row prompt-flow" style="margin-top:.75rem;">
+        <div class="pill">high-noise allocation</div>
         <div class="arrow">→</div>
-        <div class="pill">low-noise sampling reallocation</div>
+        <div class="pill">low-noise allocation</div>
       </div>
       <div class="sampling-formula">φ<sub>r</sub>(t) = rt / (1 + (r − 1)t)</div>
     </div>
@@ -981,40 +1031,48 @@ footer{
   </div>
 
   <div class="ablation">
-    <article class="card video-card reveal">
-      <div class="video tall"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_full_method.mp4" type="video/mp4" /></video></div>
-      <div class="video-info"><span class="tag">Full method</span><h3>Adaptive coarse-to-refined inference</h3></div>
-    </article>
+    <div class="ablation-top">
+      <article class="card video-card reveal full-method">
+        <div class="video tall"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_full_method.mp4" type="video/mp4" /></video></div>
+        <div class="video-info"><span class="tag">Full method</span><h3>Adaptive coarse-to-refined inference</h3></div>
+      </article>
 
-    <article class="card video-card reveal">
-      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_wo_sampling_reallocation.mp4" type="video/mp4" /></video></div>
-      <div class="video-info"><span class="tag">Ablation</span><h3>w/o sampling reallocation</h3></div>
-    </article>
+      <div class="ablation-stack">
+        <article class="card video-card reveal">
+          <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_wo_sampling_reallocation.mp4" type="video/mp4" /></video></div>
+          <div class="video-info"><span class="tag">Ablation</span><h3>w/o sampling reallocation</h3></div>
+        </article>
 
-    <article class="card video-card reveal">
-      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_wo_crtg.mp4" type="video/mp4" /></video></div>
-      <div class="video-info"><span class="tag">Ablation</span><h3>w/o CRTG</h3></div>
-    </article>
+        <article class="card video-card reveal">
+          <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_wo_crtg.mp4" type="video/mp4" /></video></div>
+          <div class="video-info"><span class="tag">Ablation</span><h3>w/o CRTG</h3></div>
+        </article>
+      </div>
+    </div>
 
-    <article class="card video-card reveal">
-      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_high_noise_concentrated.mp4" type="video/mp4" /></video></div>
-      <div class="video-info"><span class="tag">Sampling bias</span><h3>Steps overly concentrated in high-noise region</h3></div>
-    </article>
+    <div class="ablation-pair">
+      <article class="card video-card reveal">
+        <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_high_noise_concentrated.mp4" type="video/mp4" /></video></div>
+        <div class="video-info"><span class="tag">Sampling bias</span><h3>Steps overly concentrated in high-noise region</h3></div>
+      </article>
 
-    <article class="card video-card reveal">
-      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_low_noise_concentrated.mp4" type="video/mp4" /></video></div>
-      <div class="video-info"><span class="tag">Sampling bias</span><h3>Steps overly concentrated in low-noise region</h3></div>
-    </article>
+      <article class="card video-card reveal">
+        <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_low_noise_concentrated.mp4" type="video/mp4" /></video></div>
+        <div class="video-info"><span class="tag">Sampling bias</span><h3>Steps overly concentrated in low-noise region</h3></div>
+      </article>
+    </div>
 
-    <article class="card video-card reveal">
-      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_early_prompt_switch.mp4" type="video/mp4" /></video></div>
-      <div class="video-info"><span class="tag">Transition timing</span><h3>Coarse-to-refined prompt switch too early</h3></div>
-    </article>
+    <div class="ablation-pair">
+      <article class="card video-card reveal">
+        <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_early_prompt_switch.mp4" type="video/mp4" /></video></div>
+        <div class="video-info"><span class="tag">Transition timing</span><h3>Coarse-to-refined prompt switch too early</h3></div>
+      </article>
 
-    <article class="card video-card reveal">
-      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_late_prompt_switch.mp4" type="video/mp4" /></video></div>
-      <div class="video-info"><span class="tag">Transition timing</span><h3>Coarse-to-refined prompt switch too late</h3></div>
-    </article>
+      <article class="card video-card reveal">
+        <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_late_prompt_switch.mp4" type="video/mp4" /></video></div>
+        <div class="video-info"><span class="tag">Transition timing</span><h3>Coarse-to-refined prompt switch too late</h3></div>
+      </article>
+    </div>
   </div>
 </section>
 
