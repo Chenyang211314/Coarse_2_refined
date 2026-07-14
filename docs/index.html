@@ -838,32 +838,32 @@ footer{
     <h3 class="model-heading">CogVideoX-5B</h3>
     <div class="comparison-list">
       <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">01</span><div><h3>Subject objects</h3><p>Main entities remain stable across frames.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
+        <div class="comparison-label"><span class="num">01</span><div><h3>Subject objects</h3><p>Main entities remain stable across frames.</p><div class="prompt-box"><strong>Prompt:</strong> <strong class="hl">A house</strong> on the seashore stands near waves, with weathered walls, a sandy path, sea foam at the edge, and salt-stained surfaces facing the water.</div></div></div>
         <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">02</span><div><h3>Spatial layout</h3><p>Scene configuration is formed before local refinement.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
+        <div class="comparison-label"><span class="num">02</span><div><h3>Spatial layout</h3><p>Scene configuration is formed before local refinement.</p><div class="prompt-box"><strong>Prompt:</strong> An aerial view of <strong class="hl">a luxurious house</strong> with <strong class="hl">a pool</strong> shows blue water, <strong class="hl">a wide terrace, garden paths, parked cars, and trimmed lawns around the home</strong>.</div></div></div>
         <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">03</span><div><h3>Global motion</h3><p>Motion trajectory is guided by coarse semantics in early denoising.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
+        <div class="comparison-label"><span class="num">03</span><div><h3>Global motion</h3><p>Motion trajectory is guided by coarse semantics in early denoising.</p><div class="prompt-box"><strong>Prompt:</strong> A chef <strong class="hl">cuts sushi rolls</strong> on a board, pressing a knife through seaweed and rice while neatly sliced pieces line up beside the blade.</div></div></div>
         <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">04</span><div><h3>Local events</h3><p>Later denoising allocates capacity to local interactions and events.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
+        <div class="comparison-label"><span class="num">04</span><div><h3>Local events</h3><p>Later denoising allocates capacity to local interactions and events.</p><div class="prompt-box"><strong>Prompt:</strong> Firewood burns in a dark room, with orange flames, <strong class="hl">glowing embers, smoke, and flickering light on nearby brick</strong>.</div></div></div>
         <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">05</span><div><h3>Appearance attributes</h3><p>Fine visual attributes are refined after global structure is established.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
+        <div class="comparison-label"><span class="num">05</span><div><h3>Appearance attributes</h3><p>Fine visual attributes are refined after global structure is established.</p><div class="prompt-box"><strong>Prompt:</strong> A frozen river stretches across the frame, with <strong class="hl">pale ice, dark cracks</strong>, snow along the banks, and <strong class="hl">bare trees</strong> beside it.</div></div></div>
         <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">06</span><div><h3>Background details</h3><p>Background details are improved without destabilizing the main layout.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
+        <div class="comparison-label"><span class="num">06</span><div><h3>Background details</h3><p>Background details are improved without destabilizing the main layout.</p><div class="prompt-box"><strong>Prompt:</strong> A lemur eats grass leaves near low branches, holding the leaves with small hands while its striped tail curls behind it and <strong class="hl">sunlight falls through the foliage</strong>.</div></div></div>
         <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
     </div>
@@ -924,42 +924,42 @@ footer{
     <h3 class="model-heading">CogVideoX-5B · Additional Comparisons</h3>
     <div class="compact-comparison-grid">
       <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-prompt"><strong>Prompt:</strong> A seagull walks along the shore, stepping over wet sand while small waves roll behind it and shell fragments dot the beach.</div>
         <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_01_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_01_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-prompt"><strong>Prompt:</strong> A colorful butterfly perches on a flower bud, with patterned wings folded above the petals, green stems around it, and other buds blurred behind.</div>
         <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_02_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_02_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-prompt"><strong>Prompt:</strong> People applaud a kids' performance, clapping in rows of seats while children stand on a small stage under bright lights.</div>
         <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_03_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_03_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-prompt"><strong>Prompt:</strong> White flowers bloom on a tree in close up, with small petals, yellow centers, thin branches, and green leaves behind them.</div>
         <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_04_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_04_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-prompt"><strong>Prompt:</strong> Tree leaves change color during autumn, with green, yellow, and orange leaves mixed across branches and fallen leaves covering the ground.</div>
         <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_05_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_05_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-prompt"><strong>Prompt:</strong> A curious cat sits indoors and looks around, with bright eyes, upright ears, a chair and rug behind it, and light from a window crossing the floor.</div>
         <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_06_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_06_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-prompt"><strong>Prompt:</strong> A shark swims through open sea, with a gray body, pointed snout, dorsal fin cutting through blue water, and small fish in the distance.</div>
         <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_07_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_07_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> Add the evaluation prompt for this CogVideoX-5B comparison.</div>
+        <div class="compact-prompt"><strong>Prompt:</strong> A cherry tree blooms with pale flowers, with clusters of blossoms along dark branches and petals scattered on the ground.</div>
         <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_08_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/more_cogvideox_08_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
     </div>
