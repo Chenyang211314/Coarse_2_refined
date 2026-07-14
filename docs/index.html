@@ -55,6 +55,8 @@ button{font:inherit}
   align-items:center;
   justify-content:flex-end;
   gap:1.25rem;
+  flex-wrap:wrap;
+  padding:.45rem 0;
 }
 .brand{
   display:flex;
@@ -77,7 +79,7 @@ button{font:inherit}
 }
 .nav{
   display:flex;
-  gap:1.05rem;
+  gap:.9rem;
   color:var(--muted);
   font-size:.93rem;
 }
@@ -174,10 +176,7 @@ video{
   background:#111827;
 }
 .teaser-caption{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:1rem;
-  align-items:center;
+  display:block;
   padding:1rem 1.15rem;
   border-top:1px solid var(--line);
 }
@@ -597,10 +596,12 @@ h2{
 }
 .ablation{
   display:grid;
-  grid-template-columns:1.15fr .85fr;
+  grid-template-columns:repeat(3,1fr);
   gap:1rem;
 }
-.ablation .video-card:first-child{grid-row:span 2}
+.ablation .video-card:first-child{
+  grid-column:span 2;
+}
 .resource{
   display:grid;
   grid-template-columns:1fr auto;
@@ -670,24 +671,28 @@ footer{
   cursor:pointer;
 }
 @media(max-width:1080px){
-  .nav{display:none}
-  .method-compact,.sampling-card,.ablation{grid-template-columns:1fr}
+  .method-compact,.sampling-card{grid-template-columns:1fr}
+  .ablation{grid-template-columns:repeat(2,1fr)}
   .comparison-row{grid-template-columns:1fr}
   .results-grid{grid-template-columns:repeat(2,1fr)}
   .compact-comparison-grid{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .nav{display:none}
 }
 @media(max-width:640px){
   .actions{display:none}
   .hero{padding-top:2.8rem}
   h1{font-size:clamp(1.85rem,8.8vw,2.7rem)}
   h2{font-size:clamp(1.6rem,8vw,2.35rem)}
-  .pair,.flow-row,.results-grid,.compact-comparison-grid{grid-template-columns:1fr}
+  .pair,.flow-row,.results-grid,.compact-comparison-grid,.ablation{grid-template-columns:1fr}
   .pair figcaption{justify-content:center;gap:.5rem;flex-wrap:wrap}
   .compact-pair{grid-template-columns:1fr}
   .compact-pair figure:first-child{border-right:0;border-bottom:1px solid var(--line)}
   .compact-prompt{min-height:auto;max-height:none;padding:.6rem .75rem}
   .teaser-caption{display:block}
   .chips{justify-content:flex-start;margin-top:.75rem}
+  .ablation .video-card:first-child{grid-column:span 1}
   .resource{grid-template-columns:1fr}
   .footer-inner{flex-direction:column}
 }
@@ -711,8 +716,7 @@ footer{
       <a href="#ablation">Ablation</a>
     </nav>
     <div class="actions">
-      <a class="btn soft" href="#comparisons">Results</a>
-      <a class="btn primary" href="https://anonymous.4open.science/r/Coarse_2_Refined/" target="_blank" rel="noopener">Code</a>
+      <a class="btn primary" href="https://anonymous.4open.science/r/Coarse_2_Refined/" target="_blank" rel="noopener">Project Code</a>
     </div>
   </div>
 </header>
@@ -721,12 +725,6 @@ footer{
 <section class="hero">
   <h1>The Right Semantics at the Right Time: Staged Semantics for Generative Trajectories</h1>
   <p class="subtitle">A coarse-to-refined inference strategy that uses coarse semantics during high-noise formation and the full prompt during low-noise refinement.</p>
-  <div class="hero-actions">
-    <a class="btn primary large" href="#comparisons">View Baseline Comparisons</a>
-    <a class="btn large" href="#method">Method Overview</a>
-    <a class="btn soft large" href="https://anonymous.4open.science/r/Coarse_2_Refined/" target="_blank" rel="noopener">Project Code</a>
-  </div>
-
   <article class="teaser reveal">
     <div class="video wide">
       <video controls muted playsinline preload="metadata" poster="assets/images/hero_poster.jpg">
@@ -737,11 +735,6 @@ footer{
       <div>
         <p class="cap-title">Teaser</p>
         <p class="cap-sub">High-noise coarse formation followed by low-noise fine-grained refinement.</p>
-      </div>
-      <div class="chips">
-        <span class="chip"><b>1</b> coarse prompt</span>
-        <span class="chip"><b>2</b> CRTG transition</span>
-        <span class="chip"><b>3</b> input prompt</span>
       </div>
     </div>
   </article>
@@ -846,32 +839,32 @@ footer{
     <div class="comparison-list">
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">01</span><div><h3>Subject objects</h3><p>Main entities remain stable across frames.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">02</span><div><h3>Spatial layout</h3><p>Scene configuration is formed before local refinement.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">03</span><div><h3>Global motion</h3><p>Motion trajectory is guided by coarse semantics in early denoising.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">04</span><div><h3>Local events</h3><p>Later denoising allocates capacity to local interactions and events.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">05</span><div><h3>Appearance attributes</h3><p>Fine visual attributes are refined after global structure is established.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
 
       <article class="card comparison-row reveal">
         <div class="comparison-label"><span class="num">06</span><div><h3>Background details</h3><p>Background details are improved without destabilizing the main layout.</p><div class="prompt-box"><strong>Prompt:</strong> Add the evaluation prompt for this case.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span><span>CogVideoX-5B</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span><span>CogVideoX-5B</span></figcaption></figure></div>
+        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
       </article>
     </div>
   </div>
@@ -975,7 +968,7 @@ footer{
 
 <section id="ablation" class="section">
   <div class="section-head">    <h2>Ablation Study</h2>
-    <p>Component-level videos for the scheduling strategy, transition guidance, and sampling-budget reallocation.</p>
+    <p>Component-level visual comparisons for the full method, sampling-budget reallocation, CRTG, sampling-step concentration, and coarse-to-refined transition timing.</p>
   </div>
 
   <div class="ablation">
@@ -985,13 +978,33 @@ footer{
     </article>
 
     <article class="card video-card reveal">
-      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_no_gap_schedule.mp4" type="video/mp4" /></video></div>
-      <div class="video-info"><span class="tag">Ablation</span><h3>w/o semantic-gap scheduling</h3></div>
+      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_wo_sampling_reallocation.mp4" type="video/mp4" /></video></div>
+      <div class="video-info"><span class="tag">Ablation</span><h3>w/o sampling reallocation</h3></div>
     </article>
 
     <article class="card video-card reveal">
-      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_no_crtg.mp4" type="video/mp4" /></video></div>
+      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_wo_crtg.mp4" type="video/mp4" /></video></div>
       <div class="video-info"><span class="tag">Ablation</span><h3>w/o CRTG</h3></div>
+    </article>
+
+    <article class="card video-card reveal">
+      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_high_noise_concentrated.mp4" type="video/mp4" /></video></div>
+      <div class="video-info"><span class="tag">Sampling bias</span><h3>Steps overly concentrated in high-noise region</h3></div>
+    </article>
+
+    <article class="card video-card reveal">
+      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_low_noise_concentrated.mp4" type="video/mp4" /></video></div>
+      <div class="video-info"><span class="tag">Sampling bias</span><h3>Steps overly concentrated in low-noise region</h3></div>
+    </article>
+
+    <article class="card video-card reveal">
+      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_early_prompt_switch.mp4" type="video/mp4" /></video></div>
+      <div class="video-info"><span class="tag">Transition timing</span><h3>Coarse-to-refined prompt switch too early</h3></div>
+    </article>
+
+    <article class="card video-card reveal">
+      <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_late_prompt_switch.mp4" type="video/mp4" /></video></div>
+      <div class="video-info"><span class="tag">Transition timing</span><h3>Coarse-to-refined prompt switch too late</h3></div>
     </article>
   </div>
 </section>
