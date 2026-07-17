@@ -253,10 +253,11 @@ h2{
   font-weight:760;
 }
 .method-figure figcaption{
-  padding:.8rem 1rem;
+  padding:.95rem 1.08rem;
   border-top:1px solid var(--line);
   color:var(--muted);
-  font-size:.9rem;
+  font-size:.88rem;
+  line-height:1.52;
 }
 .gap-note{
   margin:.55rem 0 0;
@@ -333,24 +334,42 @@ h2{
   font-size:1.05rem;
 }
 .contrib-heading{
-  display:flex;
-  flex-direction:column;
-  gap:.18rem;
-  margin:0 0 .62rem;
-  line-height:1.18;
+  display:grid;
+  grid-template-columns:2rem minmax(0,1fr);
+  gap:.62rem;
+  align-items:start;
+  margin:0 0 .72rem;
+  line-height:1.2;
+}
+.method-card h3.contrib-heading,
+.flow h3.contrib-heading,
+.sampling-card h3.contrib-heading{
+  margin:0 0 .72rem;
+  font-size:inherit;
 }
 .contrib-index{
+  display:grid;
+  place-items:center;
+  width:2rem;
+  height:2rem;
+  border:1px solid #cbdcff;
+  border-radius:10px;
+  background:linear-gradient(135deg,var(--blue2),#f8faff);
   color:var(--blue);
-  text-transform:uppercase;
-  letter-spacing:.09em;
-  font-size:.72rem;
+  letter-spacing:0;
+  font-size:.82rem;
   font-weight:900;
+  white-space:nowrap;
 }
 .contrib-name{
+  min-width:0;
+  padding-top:.14rem;
   color:var(--ink);
-  font-size:1.02rem;
+  font-size:1.01rem;
+  line-height:1.25;
   font-weight:850;
   letter-spacing:-.02em;
+  overflow-wrap:anywhere;
 }
 .prompt-flow{
   grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr);
@@ -783,7 +802,7 @@ footer{
 <main class="page" id="top">
 <section class="hero">
 <h1>The Right Semantics at the Right Time: Staged Semantics for Generative Trajectories</h1>
-<p class="subtitle">A unified two-stage inference framework that coordinates semantic granularity, timestep allocation, and latent transition along a single denoising trajectory.</p>
+<p class="subtitle">A unified two-stage inference framework that jointly coordinates semantic granularity, prompt-dependent transition timing, timestep density, and trajectory continuity.</p>
 <article class="teaser reveal">
 <div class="video wide">
 <video controls="" muted="" playsinline="" poster="assets/images/hero_poster.jpg" preload="metadata">
@@ -793,7 +812,7 @@ footer{
 <div class="teaser-caption">
 <div>
 <p class="cap-title">Teaser</p>
-<p class="cap-sub">Coarse-condition formation, semantic-gap-adaptive switching, noise-aware timestep reallocation, and a condition-aware latent transition.</p>
+<p class="cap-sub">The coarse condition guides high-noise semantic formation, semantic-gap scheduling plans the condition transition, CRTG establishes a compatible second-stage initial state, and the input prompt guides low-noise refinement.</p>
 </div>
 </div>
 </article>
@@ -802,45 +821,45 @@ footer{
 <div class="section-head"> <h2>Method Overview</h2>
 </div>
 <figure class="card method-figure reveal">
-<img alt="Overview of the coarse-to-refined inference framework" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';" src="assets/images/overview.png"/>
+<img alt="Two-stage coarse-to-refined inference with semantic-gap scheduling, timestep reallocation, and CRTG latent transition" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';" src="assets/images/overview.png"/>
 <div class="figure-fallback" style="display:none;">Place method overview image here<br/>assets/images/overview.png</div>
-<figcaption>Overview of the two-stage framework: c guides high-noise coarse-stage sampling, the semantic gap determines the switch, CRTG establishes the second-stage initial state, and p guides low-noise fine-grained sampling.</figcaption>
+<figcaption>Overview of the proposed two-stage inference framework. A coarse condition <em>c</em> is derived from the input prompt <em>p</em>, and their semantic gap determines the transition index: a larger gap produces an earlier switch and leaves more subsequent updates for the semantic increment in <em>p</em>. Stage 1 pairs <em>c</em> with a r &gt; 1 · toward high noise to form primary objects, spatial layout, and global motion. At the planned intermediate state, CRTG uses the conditional prediction difference between the two conditions and matches the transition to an available timestep on the second-stage schedule, establishing <em>x</em><sub>t<sub>s</sub></sub> as a condition-aware starting state. Stage 2 pairs <em>p</em> with a 0 &lt; r &lt; 1 · toward low noise to realize local events, appearance attributes, and background details while retaining the coarse semantic configuration.</figcaption>
 </figure>
 <div class="method-compact">
 <article class="card method-card reveal">
-<h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅰ</span><span class="contrib-name">Coarse-to-Fine Two-Stage Generation</span></h3>
+<h3 class="contrib-heading"><span class="contrib-index">Ⅰ</span><span class="contrib-name">Coarse-to-Fine Two-Stage Generation</span></h3>
 <div class="flow-row prompt-flow">
 <div class="pill">input prompt p</div>
 <div class="arrow">→</div>
 <div class="pill">coarse prompt c</div>
 </div>
-<p style="margin-top:.72rem;">The framework assigns complementary generative responsibilities to two text conditions along one trajectory. The derived coarse condition c guides primary objects, spatial layout, and global motion in the first stage, while the input prompt p remains the final semantic target for local events, appearance attributes, and background details in the second stage.</p>
+<p style="margin-top:.72rem;">The prompt-generation operator <em>c</em> = G(<em>p</em>) constructs an operational textual proxy that retains primary objects, spatial layout, and global motion while omitting local events, appearance attributes, background details, and overly specific modifiers. The coarse condition guides early high-noise sampling, whereas <em>p</em> remains the final semantic target for later fine-grained realization.</p>
 </article>
 <article class="card flow reveal">
-<h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅱ</span><span class="contrib-name">Semantic-Gap-Adaptive Prompt Scheduling</span></h3>
+<h3 class="contrib-heading"><span class="contrib-index">Ⅱ</span><span class="contrib-name">Semantic-Gap-Adaptive Prompt Scheduling</span></h3>
 <div class="formula">g = 1 − cos(E(c), E(p))</div>
-<p class="gap-note">The semantic gap measures the content present in p but absent from c. A larger gap shortens the coarse stage and triggers an earlier transition, reserving more remaining updates for the additional constraints in p; a smaller gap retains longer coarse-stage sampling.</p>
+<p class="gap-note">The semantic gap approximates the prompt-dependent content present in <em>p</em> but absent from <em>c</em> and is mapped to a bounded coarse-stage ratio ρ(<em>g</em>). A larger gap shortens the first stage and triggers an earlier transition, reserving more remaining updates for the additional constraints in <em>p</em>; a smaller gap retains longer sampling under <em>c</em>. Bounding both the effective gap and stage ratio prevents either stage from collapsing.</p>
 </article>
 <article class="card method-card reveal">
-<h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅲ</span><span class="contrib-name">Coarse-to-Refined Transition Guidance</span></h3>
-<p>CRTG uses the conditional prediction increment from c to p to guide the intermediate latent toward a noise state available on the second-stage schedule.</p>
+<h3 class="contrib-heading"><span class="contrib-index">Ⅲ</span><span class="contrib-name">Coarse-to-Refined Transition Guidance</span></h3>
+<p>At the planned transition, the intermediate latent lies on a trajectory induced by <em>c</em>. CRTG treats <em>d</em><sub>c</sub> as the coarse semantic reference and <em>d</em><sub>p</sub> − <em>d</em><sub>c</sub> as the conditional increment introduced by the additional semantics in <em>p</em>.</p>
 <div class="formula">d<sub>crtg</sub> = d<sub>c</sub> + λ<sub>crtg</sub>(d<sub>p</sub> − d<sub>c</sub>)</div>
-<p style="margin-top:.72rem;">The resulting transition state retains the coarse semantic configuration while providing a condition-aware starting point for fine-grained denoising, reducing instability from an abrupt condition switch.</p>
+<p style="margin-top:.72rem;">The guided direction is matched to the closest available timestep on the second-stage schedule to establish the new initial state. This state preserves the coarse configuration while restoring sufficient remaining noise for fine-grained constraints, mitigating texture inconsistency, color shifts, flickering, and block-like artifacts caused by a hard condition switch.</p>
 </article>
 </div>
 <article class="card sampling-card reveal">
 <div>
-<h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅳ</span><span class="contrib-name">Sampling-Budget Reallocation</span></h3>
-<p>Sampling-Budget Reallocation changes timestep locations while preserving the number and order of sampling steps. The coarse stage concentrates timestep density toward high noise, whereas the fine-grained stage concentrates it toward low noise.</p>
+<h3 class="contrib-heading"><span class="contrib-index">Ⅳ</span><span class="contrib-name">Sampling-Budget Reallocation</span></h3>
+<p>Sampling-Budget Reallocation applies the monotonic mapping φ<sub>r</sub> to redistribute discrete timestep locations while preserving schedule cardinality and timestep order. For <em>r</em> &gt; 1, interior timesteps move toward the high-noise endpoint, increasing update density where coarse visual organization remains malleable; for 0 &lt; <em>r</em> &lt; 1, they move toward the low-noise endpoint, increasing support for local events, appearance attributes, and background details. The first stage therefore uses a r &gt; 1 · toward high noise under <em>c</em>, while the second stage uses a 0 &lt; r &lt; 1 · toward low noise under <em>p</em>, without increasing the total number of model evaluations.</p>
 <div class="flow-row prompt-flow" style="margin-top:.75rem;">
-<div class="pill">high-noise-oriented schedule</div>
+<div class="pill">r &gt; 1 · toward high noise</div>
 <div class="arrow">→</div>
-<div class="pill">low-noise-oriented schedule</div>
+<div class="pill">0 &lt; r &lt; 1 · toward low noise</div>
 </div>
 <div class="sampling-formula">φ<sub>r</sub>(t) = rt / (1 + (r − 1)t)</div>
 </div>
 <div class="sampling-figure">
-<img alt="Sampling-budget reallocation illustration" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" src="assets/images/Sample_Reallocation.png"/>
+<img alt="Sampling-budget reallocation mapping timesteps toward high-noise or low-noise endpoints" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" src="assets/images/Sample_Reallocation.png"/>
 <span style="display:none;">Place sampling reallocation figure here<br/>assets/images/Sample_Reallocation.png</span>
 </div>
 </article>
