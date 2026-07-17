@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>The Right Semantics at the Right Time: Staged Semantics for Generative Trajectories</title>
 <style>
 :root{
@@ -765,342 +766,292 @@ footer{
 }
 </style>
 </head>
-
 <body>
 <header class="topbar">
-  <div class="topbar-inner">
-    <nav class="nav" aria-label="Main navigation">
-      <a href="#method">Method</a>
-      <a href="#comparisons">Comparisons</a>
-      <a href="#more-results">More Results</a>
-      <a href="#ablation">Ablation</a>
-    </nav>
-    <div class="actions">
-      <a class="btn primary" href="https://anonymous.4open.science/r/Coarse_2_Refined/" target="_blank" rel="noopener">Project Code</a>
-    </div>
-  </div>
+<div class="topbar-inner">
+<nav aria-label="Main navigation" class="nav">
+<a href="#method">Method</a>
+<a href="#comparisons">Comparisons</a>
+<a href="#more-results">More Results</a>
+<a href="#ablation">Ablation</a>
+</nav>
+<div class="actions">
+<a class="btn primary" href="https://anonymous.4open.science/r/Coarse_2_Refined/" rel="noopener" target="_blank">Project Code</a>
+</div>
+</div>
 </header>
-
-<main id="top" class="page">
+<main class="page" id="top">
 <section class="hero">
-  <h1>The Right Semantics at the Right Time: Staged Semantics for Generative Trajectories</h1>
-  <p class="subtitle">A coarse-to-refined inference strategy that uses coarse semantics during high-noise formation and the full prompt during low-noise refinement.</p>
-  <article class="teaser reveal">
-    <div class="video wide">
-      <video controls muted playsinline preload="metadata" poster="assets/images/hero_poster.jpg">
-        <source src="assets/videos/hero_coarse_to_refined.mp4" type="video/mp4" />
-      </video>
-    </div>
-    <div class="teaser-caption">
-      <div>
-        <p class="cap-title">Teaser</p>
-        <p class="cap-sub">High-noise coarse formation followed by low-noise fine-grained refinement.</p>
-      </div>
-    </div>
-  </article>
+<h1>The Right Semantics at the Right Time: Staged Semantics for Generative Trajectories</h1>
+<p class="subtitle">A unified two-stage inference framework that coordinates semantic granularity, timestep allocation, and latent transition along a single denoising trajectory.</p>
+<article class="teaser reveal">
+<div class="video wide">
+<video controls="" muted="" playsinline="" poster="assets/images/hero_poster.jpg" preload="metadata">
+<source src="assets/videos/hero_coarse_to_refined.mp4" type="video/mp4"/>
+</video>
+</div>
+<div class="teaser-caption">
+<div>
+<p class="cap-title">Teaser</p>
+<p class="cap-sub">Coarse-condition formation, semantic-gap-adaptive switching, noise-aware timestep reallocation, and a condition-aware latent transition.</p>
+</div>
+</div>
+</article>
 </section>
-
-<section id="method" class="section">
-  <div class="section-head">    <h2>Method Overview</h2>
-  </div>
-
-  <figure class="card method-figure reveal">
-    <img src="assets/images/overview.png" alt="Overview of the coarse-to-refined inference framework" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';" />
-    <div class="figure-fallback" style="display:none;">Place method overview image here<br />assets/images/overview.png</div>
-    <figcaption>Overview placeholder for the complete staged-semantics inference pipeline.</figcaption>
-  </figure>
-
-  <div class="method-compact">
-    <article class="card method-card reveal">
-      <h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅰ</span><span class="contrib-name">Coarse-to-Fine Semantic Staging</span></h3>
-      <div class="flow-row prompt-flow">
-        <div class="pill">input&nbsp;prompt&nbsp;p</div>
-        <div class="arrow">→</div>
-        <div class="pill">coarse&nbsp;prompt&nbsp;c</div>
-      </div>
-      <p style="margin-top:.72rem;">The framework separates early coarse-grained semantic formation from later fine-grained constraint realization. The coarse prompt controls primary objects, spatial layout, and global motion; the full prompt later restores local events, appearance attributes, and background details.</p>
-    </article>
-
-    <article class="card flow reveal">
-      <h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅱ</span><span class="contrib-name">Semantic-Gap-Adaptive Prompt Scheduling</span></h3>
-      <div class="formula">g = 1 − cos(E(c), E(p))</div>
-      <p class="gap-note">The semantic gap estimates the prompt-dependent increment from c to p and determines the coarse-stage duration, avoiding a fixed transition point that is either too early or too late across different prompts.</p>
-    </article>
-
-    <article class="card method-card reveal">
-      <h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅲ</span><span class="contrib-name">Coarse-to-Refined Transition Guidance</span></h3>
-      <p>CRTG adjusts the intermediate latent before fine-grained sampling, converting the coarse-stage state into a stable starting point for continued denoising under the full prompt.</p>
-      <div class="formula">d<sub>crtg</sub> = d<sub>c</sub> + λ<sub>crtg</sub>(d<sub>p</sub> − d<sub>c</sub>)</div>
-      <p style="margin-top:.72rem;">This transition preserves the formed global configuration while moving the latent toward a state where fine-grained constraints can still influence the remaining trajectory.</p>
-    </article>
-  </div>
-
-  <article class="card sampling-card reveal">
-    <div>
-      <h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅳ</span><span class="contrib-name">Sampling-Budget Reallocation</span></h3>
-      <p>The fixed sampling budget is redistributed along the noise axis. High-noise-oriented allocation gives denser updates to coarse semantic formation, while low-noise-oriented allocation reserves capacity for fine-grained refinement.</p>
-      <div class="flow-row prompt-flow" style="margin-top:.75rem;">
-        <div class="pill">high-noise allocation</div>
-        <div class="arrow">→</div>
-        <div class="pill">low-noise allocation</div>
-      </div>
-      <div class="sampling-formula">φ<sub>r</sub>(t) = rt / (1 + (r − 1)t)</div>
-    </div>
-    <div class="sampling-figure">
-      <img src="assets/images/Sample_Reallocation.png" alt="Sampling-budget reallocation illustration" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-      <span style="display:none;">Place sampling reallocation figure here<br />assets/images/Sample_Reallocation.png</span>
-    </div>
-  </article>
+<section class="section" id="method">
+<div class="section-head"> <h2>Method Overview</h2>
+</div>
+<figure class="card method-figure reveal">
+<img alt="Overview of the coarse-to-refined inference framework" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';" src="assets/images/overview.png"/>
+<div class="figure-fallback" style="display:none;">Place method overview image here<br/>assets/images/overview.png</div>
+<figcaption>Overview of the two-stage framework: c guides high-noise coarse-stage sampling, the semantic gap determines the switch, CRTG establishes the second-stage initial state, and p guides low-noise fine-grained sampling.</figcaption>
+</figure>
+<div class="method-compact">
+<article class="card method-card reveal">
+<h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅰ</span><span class="contrib-name">Coarse-to-Fine Two-Stage Generation</span></h3>
+<div class="flow-row prompt-flow">
+<div class="pill">input prompt p</div>
+<div class="arrow">→</div>
+<div class="pill">coarse prompt c</div>
+</div>
+<p style="margin-top:.72rem;">The framework assigns complementary generative responsibilities to two text conditions along one trajectory. The derived coarse condition c guides primary objects, spatial layout, and global motion in the first stage, while the input prompt p remains the final semantic target for local events, appearance attributes, and background details in the second stage.</p>
+</article>
+<article class="card flow reveal">
+<h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅱ</span><span class="contrib-name">Semantic-Gap-Adaptive Prompt Scheduling</span></h3>
+<div class="formula">g = 1 − cos(E(c), E(p))</div>
+<p class="gap-note">The semantic gap measures the content present in p but absent from c. A larger gap shortens the coarse stage and triggers an earlier transition, reserving more remaining updates for the additional constraints in p; a smaller gap retains longer coarse-stage sampling.</p>
+</article>
+<article class="card method-card reveal">
+<h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅲ</span><span class="contrib-name">Coarse-to-Refined Transition Guidance</span></h3>
+<p>CRTG uses the conditional prediction increment from c to p to guide the intermediate latent toward a noise state available on the second-stage schedule.</p>
+<div class="formula">d<sub>crtg</sub> = d<sub>c</sub> + λ<sub>crtg</sub>(d<sub>p</sub> − d<sub>c</sub>)</div>
+<p style="margin-top:.72rem;">The resulting transition state retains the coarse semantic configuration while providing a condition-aware starting point for fine-grained denoising, reducing instability from an abrupt condition switch.</p>
+</article>
+</div>
+<article class="card sampling-card reveal">
+<div>
+<h3 class="contrib-heading"><span class="contrib-index">Contribution Ⅳ</span><span class="contrib-name">Sampling-Budget Reallocation</span></h3>
+<p>Sampling-Budget Reallocation changes timestep locations while preserving the number and order of sampling steps. The coarse stage concentrates timestep density toward high noise, whereas the fine-grained stage concentrates it toward low noise.</p>
+<div class="flow-row prompt-flow" style="margin-top:.75rem;">
+<div class="pill">high-noise-oriented schedule</div>
+<div class="arrow">→</div>
+<div class="pill">low-noise-oriented schedule</div>
+</div>
+<div class="sampling-formula">φ<sub>r</sub>(t) = rt / (1 + (r − 1)t)</div>
+</div>
+<div class="sampling-figure">
+<img alt="Sampling-budget reallocation illustration" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" src="assets/images/Sample_Reallocation.png"/>
+<span style="display:none;">Place sampling reallocation figure here<br/>assets/images/Sample_Reallocation.png</span>
+</div>
+</article>
 </section>
-
-<section id="comparisons" class="section">
-  <div class="section-head">    <h2>Baseline vs. Ours</h2>
-    <p>Each comparison uses one base model and one prompt. The baseline and our method are shown side by side with an explicit prompt slot.</p>
-  </div>
-
-  <div class="model-block">
-    <h3 class="model-heading">Wan2.2-5B</h3>
-    <div class="comparison-list">
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">01</span><div><h3>Subject objects</h3><p>Main entities remain stable across frames.</p><div class="prompt-box"><strong>Prompt:</strong> A <strong class="hl">green sea turtle</strong> swims over coral in a tropical reef, where branching coral rises below its shell, striped reef fish pass beside it, and sun rays filter through clear blue water.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_subject_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_subject_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">02</span><div><h3>Spatial layout</h3><p>Scene configuration is formed before local refinement.</p><div class="prompt-box"><strong>Prompt:</strong> <strong class="hl">A river floods</strong> over its banks beside a rural road, carrying muddy water and grass clumps past fence posts and <strong class="hl">a half-submerged mailbox</strong>.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_layout_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_layout_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">03</span><div><h3>Global motion</h3><p>Motion trajectory is guided by coarse semantics in early denoising.</p><div class="prompt-box"><strong>Prompt:</strong> A person in a yellow ski suit skis<strong class="hl">from the top of a slope to the bottom at a large ski resort.</strong> There are many other people on the slopes, the weather is sunny, and the sun is shining.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_motion_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_motion_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">04</span><div><h3>Local events</h3><p>Later denoising allocates capacity to local interactions and events.</p><div class="prompt-box"><strong>Prompt:</strong> <strong class="hl">White milk swirls into black coffee</strong> inside a clear cup, forming curved patterns that fade into light brown liquid.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_events_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_events_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">05</span><div><h3>Appearance attributes</h3><p>Fine visual attributes are refined after global structure is established.</p><div class="prompt-box"><strong>Prompt:</strong> A lighthouse stands on the ocean shore, with a tall <strong class="hl">white tower</strong>, rocky coast, waves breaking below, and open sea stretching behind it.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_appearance_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_appearance_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">06</span><div><h3>Background details</h3><p>Background details are improved without destabilizing the main layout.</p><div class="prompt-box"><strong>Prompt:</strong> A black dog runs happily across <strong class="hl">a yellow grassy field, with a clear blue sky and some trees in the background.</strong></div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_background_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan/model_wan_background_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-    </div>
-  </div>
-
-  <div class="model-block">
-    <h3 class="model-heading">CogVideoX-5B</h3>
-    <div class="comparison-list">
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">01</span><div><h3>Subject objects</h3><p>Main entities remain stable across frames.</p><div class="prompt-box"><strong>Prompt:</strong> <strong class="hl">A house</strong> on the seashore stands near waves, with weathered walls, a sandy path, sea foam at the edge, and salt-stained surfaces facing the water.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">02</span><div><h3>Spatial layout</h3><p>Scene configuration is formed before local refinement.</p><div class="prompt-box"><strong>Prompt:</strong> An aerial view of <strong class="hl">a luxurious house</strong> with <strong class="hl">a pool</strong> shows blue water, <strong class="hl">a wide terrace, garden paths, parked cars, and trimmed lawns around the home</strong>.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">03</span><div><h3>Global motion</h3><p>Motion trajectory is guided by coarse semantics in early denoising.</p><div class="prompt-box"><strong>Prompt:</strong> A chef <strong class="hl">cuts sushi rolls</strong> on a board, pressing a knife through seaweed and rice while neatly sliced pieces line up beside the blade.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">04</span><div><h3>Local events</h3><p>Later denoising allocates capacity to local interactions and events.</p><div class="prompt-box"><strong>Prompt:</strong> Firewood burns in a dark room, with orange flames, <strong class="hl">glowing embers, smoke, and flickering light on nearby brick</strong>.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">05</span><div><h3>Appearance attributes</h3><p>Fine visual attributes are refined after global structure is established.</p><div class="prompt-box"><strong>Prompt:</strong> A frozen river stretches across the frame, with <strong class="hl">pale ice, dark cracks</strong>, snow along the banks, and <strong class="hl">bare trees</strong> beside it.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card comparison-row reveal">
-        <div class="comparison-label"><span class="num">06</span><div><h3>Background details</h3><p>Background details are improved without destabilizing the main layout.</p><div class="prompt-box"><strong>Prompt:</strong> A lemur eats grass leaves near low branches, holding the leaves with small hands while its striped tail curls behind it and <strong class="hl">sunlight falls through the foliage</strong>.</div></div></div>
-        <div class="pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-    </div>
-  </div>
+<section class="section" id="comparisons">
+<div class="section-head"> <h2>Baseline vs. Ours</h2>
+<p>Within each backbone, conventional inference and the proposed staged inference are compared under the same prompt across six semantic criteria. Overall win rates reach 53.6% on Wan2.2-5B and 58.0% on CogVideoX-5B.</p>
+</div>
+<div class="model-block">
+<h3 class="model-heading">Wan2.2-5B</h3>
+<div class="comparison-list">
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">01</span><div><h3>Primary objects</h3><p>Evaluates whether the prompt-specified primary entities are correctly realized.</p><div class="prompt-box"><strong>Prompt:</strong> A <strong class="hl">green sea turtle</strong> swims over coral in a tropical reef, where branching coral rises below its shell, striped reef fish pass beside it, and sun rays filter through clear blue water.</div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_subject_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_subject_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">02</span><div><h3>Spatial layout</h3><p>Evaluates the relative arrangement and scene configuration specified by the prompt.</p><div class="prompt-box"><strong>Prompt:</strong> <strong class="hl">A river floods</strong> over its banks beside a rural road, carrying muddy water and grass clumps past fence posts and <strong class="hl">a half-submerged mailbox</strong>.</div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_layout_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_layout_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">03</span><div><h3>Global motion</h3><p>Evaluates the principal motion pattern and large-scale temporal evolution.</p><div class="prompt-box"><strong>Prompt:</strong> A person in a yellow ski suit skis<strong class="hl">from the top of a slope to the bottom at a large ski resort.</strong> There are many other people on the slopes, the weather is sunny, and the sun is shining.</div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_motion_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_motion_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">04</span><div><h3>Local events</h3><p>Evaluates localized interactions and event-level changes.</p><div class="prompt-box"><strong>Prompt:</strong> <strong class="hl">White milk swirls into black coffee</strong> inside a clear cup, forming curved patterns that fade into light brown liquid.</div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_events_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_events_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">05</span><div><h3>Appearance attributes</h3><p>Evaluates prompt-specified visual properties such as color, material, shape, and texture.</p><div class="prompt-box"><strong>Prompt:</strong> A lighthouse stands on the ocean shore, with a tall <strong class="hl">white tower</strong>, rocky coast, waves breaking below, and open sea stretching behind it.</div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_appearance_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_appearance_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">06</span><div><h3>Background details</h3><p>Evaluates contextual elements and scene details beyond the primary objects.</p><div class="prompt-box"><strong>Prompt:</strong> A black dog runs happily across <strong class="hl">a yellow grassy field, with a clear blue sky and some trees in the background.</strong></div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_background_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan/model_wan_background_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+</div>
+</div>
+<div class="model-block">
+<h3 class="model-heading">CogVideoX-5B</h3>
+<div class="comparison-list">
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">01</span><div><h3>Primary objects</h3><p>Evaluates whether the prompt-specified primary entities are correctly realized.</p><div class="prompt-box"><strong>Prompt:</strong> <strong class="hl">A house</strong> on the seashore stands near waves, with weathered walls, a sandy path, sea foam at the edge, and salt-stained surfaces facing the water.</div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_subject_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">02</span><div><h3>Spatial layout</h3><p>Evaluates the relative arrangement and scene configuration specified by the prompt.</p><div class="prompt-box"><strong>Prompt:</strong> An aerial view of <strong class="hl">a luxurious house</strong> with <strong class="hl">a pool</strong> shows blue water, <strong class="hl">a wide terrace, garden paths, parked cars, and trimmed lawns around the home</strong>.</div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_layout_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">03</span><div><h3>Global motion</h3><p>Evaluates the principal motion pattern and large-scale temporal evolution.</p><div class="prompt-box"><strong>Prompt:</strong> A chef <strong class="hl">cuts sushi rolls</strong> on a board, pressing a knife through seaweed and rice while neatly sliced pieces line up beside the blade.</div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_motion_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">04</span><div><h3>Local events</h3><p>Evaluates localized interactions and event-level changes.</p><div class="prompt-box"><strong>Prompt:</strong> Firewood burns in a dark room, with orange flames, <strong class="hl">glowing embers, smoke, and flickering light on nearby brick</strong>.</div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_events_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">05</span><div><h3>Appearance attributes</h3><p>Evaluates prompt-specified visual properties such as color, material, shape, and texture.</p><div class="prompt-box"><strong>Prompt:</strong> A frozen river stretches across the frame, with <strong class="hl">pale ice, dark cracks</strong>, snow along the banks, and <strong class="hl">bare trees</strong> beside it.</div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_appearance_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card comparison-row reveal">
+<div class="comparison-label"><span class="num">06</span><div><h3>Background details</h3><p>Evaluates contextual elements and scene details beyond the primary objects.</p><div class="prompt-box"><strong>Prompt:</strong> A lemur eats grass leaves near low branches, holding the leaves with small hands while its striped tail curls behind it and <strong class="hl">sunlight falls through the foliage</strong>.</div></div></div>
+<div class="pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX/model_cogvideox_background_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+</div>
+</div>
 </section>
-
-<section id="more-results" class="section">
-  <div class="section-head">    <h2>More Qualitative Results</h2>
-    <p>Additional baseline-versus-ours comparisons. Each compact card keeps the prompt, baseline video, and our result together for direct visual inspection.</p>
-  </div>
-
-  <div class="model-block">
-    <h3 class="model-heading">Wan2.2-5B · Additional Comparisons</h3>
-    <div class="compact-comparison-grid">
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A red fox leaps over a stream in an autumn birch grove, where fallen orange leaves fly from the bank, wet stones border the water, and thin white trunks stand behind the fox.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_01_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_01_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A orange clownfish weaves through anemone in a coral lagoon, where soft anemone tentacles sway around its body, small particles drift in the water, and purple coral heads sit nearby.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_02_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_02_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A tall sunflower with a heavy yellow head slowly turns in an open farm field, with green leaves twisting along the stem and rows of other sunflowers behind it.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_03_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_03_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> Orange juice splashes into a tall glass, forming bubbles at the top and droplets on the clear rim.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_04_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_04_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A yellow butterfly flies between flowers in an alpine meadow, where purple lupines sway below it, patches of white snow remain on distant slopes, and grass stems bend in the wind.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_05_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_05_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A red squirrel runs along a log in a temperate forest floor, where moss covers the fallen trunk, acorns scatter near its paws, and ferns grow around the shaded clearing.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_06_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_06_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A baker in a white apron kneads a round dough ball on a floured wooden table, with copper bowls and stacked proofing baskets behind the counter.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_07_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_07_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A scuba diver enters a coral reef, releasing bubbles while yellow reef fish pass between branching coral and a blue coral wall rises nearby.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_08_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_08_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-    </div>
-  </div>
-
-  <div class="model-block">
-    <h3 class="model-heading">CogVideoX-5B · Additional Comparisons</h3>
-    <div class="compact-comparison-grid">
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A seagull walks along the shore, stepping over wet sand while small waves roll behind it and shell fragments dot the beach.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_01_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_01_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A colorful butterfly perches on a flower bud, with patterned wings folded above the petals, green stems around it, and other buds blurred behind.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_02_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_02_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> People applaud a kids' performance, clapping in rows of seats while children stand on a small stage under bright lights.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_03_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_03_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> White flowers bloom on a tree in close up, with small petals, yellow centers, thin branches, and green leaves behind them.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_04_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_04_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> Tree leaves change color during autumn, with green, yellow, and orange leaves mixed across branches and fallen leaves covering the ground.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_05_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_05_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A curious cat sits indoors and looks around, with bright eyes, upright ears, a chair and rug behind it, and light from a window crossing the floor.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_06_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_06_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A shark swims through open sea, with a gray body, pointed snout, dorsal fin cutting through blue water, and small fish in the distance.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_07_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_07_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-
-      <article class="card compact-comparison-card reveal">
-        <div class="compact-prompt"><strong>Prompt:</strong> A cherry tree blooms with pale flowers, with clusters of blossoms along dark branches and petals scattered on the ground.</div>
-        <div class="compact-pair"><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_08_baseline.mp4" type="video/mp4" /></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls muted playsinline preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_08_ours.mp4" type="video/mp4" /></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
-      </article>
-    </div>
-  </div>
+<section class="section" id="more-results">
+<div class="section-head"> <h2>More Qualitative Results</h2>
+<p>Additional within-backbone comparisons across diverse content categories, using conventional inference and the same staged inference procedure.</p>
+</div>
+<div class="model-block">
+<h3 class="model-heading">Wan2.2-5B · Additional Comparisons</h3>
+<div class="compact-comparison-grid">
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A red fox leaps over a stream in an autumn birch grove, where fallen orange leaves fly from the bank, wet stones border the water, and thin white trunks stand behind the fox.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_01_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_01_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A orange clownfish weaves through anemone in a coral lagoon, where soft anemone tentacles sway around its body, small particles drift in the water, and purple coral heads sit nearby.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_02_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_02_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A tall sunflower with a heavy yellow head slowly turns in an open farm field, with green leaves twisting along the stem and rows of other sunflowers behind it.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_03_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_03_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> Orange juice splashes into a tall glass, forming bubbles at the top and droplets on the clear rim.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_04_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_04_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A yellow butterfly flies between flowers in an alpine meadow, where purple lupines sway below it, patches of white snow remain on distant slopes, and grass stems bend in the wind.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_05_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_05_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A red squirrel runs along a log in a temperate forest floor, where moss covers the fallen trunk, acorns scatter near its paws, and ferns grow around the shaded clearing.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_06_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_06_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A baker in a white apron kneads a round dough ball on a floured wooden table, with copper bowls and stacked proofing baskets behind the counter.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_07_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_07_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A scuba diver enters a coral reef, releasing bubbles while yellow reef fish pass between branching coral and a blue coral wall rises nearby.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_08_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/Wan_Additional/more_wan_08_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+</div>
+</div>
+<div class="model-block">
+<h3 class="model-heading">CogVideoX-5B · Additional Comparisons</h3>
+<div class="compact-comparison-grid">
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A seagull walks along the shore, stepping over wet sand while small waves roll behind it and shell fragments dot the beach.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_01_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_01_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A colorful butterfly perches on a flower bud, with patterned wings folded above the petals, green stems around it, and other buds blurred behind.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_02_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_02_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> People applaud a kids' performance, clapping in rows of seats while children stand on a small stage under bright lights.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_03_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_03_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> White flowers bloom on a tree in close up, with small petals, yellow centers, thin branches, and green leaves behind them.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_04_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_04_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> Tree leaves change color during autumn, with green, yellow, and orange leaves mixed across branches and fallen leaves covering the ground.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_05_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_05_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A curious cat sits indoors and looks around, with bright eyes, upright ears, a chair and rug behind it, and light from a window crossing the floor.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_06_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_06_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A shark swims through open sea, with a gray body, pointed snout, dorsal fin cutting through blue water, and small fish in the distance.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_07_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_07_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+<article class="card compact-comparison-card reveal">
+<div class="compact-prompt"><strong>Prompt:</strong> A cherry tree blooms with pale flowers, with clusters of blossoms along dark branches and petals scattered on the ground.</div>
+<div class="compact-pair"><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_08_baseline.mp4" type="video/mp4"/></video><figcaption><span class="baseline-label">Baseline</span></figcaption></figure><figure><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/CogVideoX_Additional/more_cogvideox_08_ours.mp4" type="video/mp4"/></video><figcaption><span class="ours-label">Ours</span></figcaption></figure></div>
+</article>
+</div>
+</div>
 </section>
-
-<section id="ablation" class="section">
-  <div class="section-head">    <h2>Ablation Study</h2>
-    <p>Component-level visual comparisons for the full method, sampling-budget reallocation, CRTG, sampling-step concentration, and coarse-to-refined transition timing.</p>
-  </div>
-
-  <div class="ablation">
-    <div class="ablation-top">
-      <article class="card video-card reveal full-method">
-        <div class="video tall"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_full_method.mp4" type="video/mp4" /></video></div>
-        <div class="video-info"><span class="tag">Full method</span><h3>Adaptive coarse-to-refined inference</h3></div>
-      </article>
-
-      <div class="ablation-stack">
-        <article class="card video-card reveal">
-          <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_wo_sampling_reallocation.mp4" type="video/mp4" /></video></div>
-          <div class="video-info"><span class="tag">Ablation</span><h3>w/o sampling reallocation</h3></div>
-        </article>
-
-        <article class="card video-card reveal">
-          <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_wo_crtg.mp4" type="video/mp4" /></video></div>
-          <div class="video-info"><span class="tag">Ablation</span><h3>w/o CRTG</h3></div>
-        </article>
-      </div>
-    </div>
-
-    <div class="ablation-pair">
-      <article class="card video-card reveal">
-        <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_high_noise_concentrated.mp4" type="video/mp4" /></video></div>
-        <div class="video-info"><span class="tag">Sampling bias</span><h3>Steps overly concentrated in high-noise region</h3></div>
-      </article>
-
-      <article class="card video-card reveal">
-        <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_low_noise_concentrated.mp4" type="video/mp4" /></video></div>
-        <div class="video-info"><span class="tag">Sampling bias</span><h3>Steps overly concentrated in low-noise region</h3></div>
-      </article>
-    </div>
-
-    <div class="ablation-pair">
-      <article class="card video-card reveal">
-        <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_early_prompt_switch.mp4" type="video/mp4" /></video></div>
-        <div class="video-info"><span class="tag">Transition timing</span><h3>Coarse-to-refined prompt switch too early</h3></div>
-      </article>
-
-      <article class="card video-card reveal">
-        <div class="video"><video controls muted playsinline preload="metadata"><source src="assets/videos/ablation_late_prompt_switch.mp4" type="video/mp4" /></video></div>
-        <div class="video-info"><span class="tag">Transition timing</span><h3>Coarse-to-refined prompt switch too late</h3></div>
-      </article>
-    </div>
-  </div>
+<section class="section" id="ablation">
+<div class="section-head"> <h2>Ablation Study</h2>
+<p>Visual sensitivity analysis isolates the effects of Sampling-Budget Reallocation, CRTG, timestep concentration, and the timing of the condition transition from c to p.</p>
+</div>
+<div class="ablation">
+<div class="ablation-top">
+<article class="card video-card reveal full-method">
+<div class="video tall"><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/ablation_full_method.mp4" type="video/mp4"/></video></div>
+<div class="video-info"><span class="tag">Full framework</span><h3>Semantic-gap-adaptive staged inference</h3></div>
+</article>
+<div class="ablation-stack">
+<article class="card video-card reveal">
+<div class="video"><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/ablation_wo_sampling_reallocation.mp4" type="video/mp4"/></video></div>
+<div class="video-info"><span class="tag">Component removal</span><h3>w/o Sampling-Budget Reallocation</h3></div>
+</article>
+<article class="card video-card reveal">
+<div class="video"><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/ablation_wo_crtg.mp4" type="video/mp4"/></video></div>
+<div class="video-info"><span class="tag">Component removal</span><h3>w/o Coarse-to-Refined Transition Guidance</h3></div>
+</article>
+</div>
+</div>
+<div class="ablation-pair">
+<article class="card video-card reveal">
+<div class="video"><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/ablation_high_noise_concentrated.mp4" type="video/mp4"/></video></div>
+<div class="video-info"><span class="tag">Schedule sensitivity</span><h3>Sampling steps overly concentrated in the high-noise region</h3></div>
+</article>
+<article class="card video-card reveal">
+<div class="video"><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/ablation_low_noise_concentrated.mp4" type="video/mp4"/></video></div>
+<div class="video-info"><span class="tag">Schedule sensitivity</span><h3>Sampling steps overly concentrated in the low-noise region</h3></div>
+</article>
+</div>
+<div class="ablation-pair">
+<article class="card video-card reveal">
+<div class="video"><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/ablation_early_prompt_switch.mp4" type="video/mp4"/></video></div>
+<div class="video-info"><span class="tag">Transition sensitivity</span><h3>Condition transition from c to p too early</h3></div>
+</article>
+<article class="card video-card reveal">
+<div class="video"><video controls="" muted="" playsinline="" preload="metadata"><source src="assets/videos/ablation_late_prompt_switch.mp4" type="video/mp4"/></video></div>
+<div class="video-info"><span class="tag">Transition sensitivity</span><h3>Condition transition from c to p too late</h3></div>
+</article>
+</div>
+</div>
 </section>
-
 <section class="section">
-  <article class="card resource reveal">
-    <div>      <h2>Resources</h2>
-      <p>Use the project page for visual inspection and the repository for code and supplementary files.</p>
-    </div>
-    <div class="hero-actions">
-      <a class="btn large" href="#top">Back to top</a>
-      <a class="btn primary large" href="https://anonymous.4open.science/r/Coarse_2_Refined/" target="_blank" rel="noopener">Code Repository</a>
-    </div>
-  </article>
+<article class="card resource reveal">
+<div> <h2>Resources</h2>
+<p>Code and supplementary visual results for the proposed staged inference framework.</p>
+</div>
+<div class="hero-actions">
+<a class="btn large" href="#top">Back to top</a>
+<a class="btn primary large" href="https://anonymous.4open.science/r/Coarse_2_Refined/" rel="noopener" target="_blank">Code Repository</a>
+</div>
+</article>
 </section>
 </main>
-
-<div class="modal" aria-hidden="true">
-  <button class="close" aria-label="Close video">×</button>
-  <video controls autoplay playsinline></video>
+<div aria-hidden="true" class="modal">
+<button aria-label="Close video" class="close">×</button>
+<video autoplay="" controls="" playsinline=""></video>
 </div>
-
 <footer>
-  <div class="footer-inner">
-    <span>Supplementary project page.</span>
-    <span>No author, affiliation, or contact information is included.</span>
-  </div>
+<div class="footer-inner">
+<span>Supplementary project page.</span>
+<span>No author, affiliation, or contact information is included.</span>
+</div>
 </footer>
-
 <script>
 const revealObserver=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting)entry.target.classList.add("visible")})},{threshold:.12});
 document.querySelectorAll(".reveal").forEach((el)=>revealObserver.observe(el));
