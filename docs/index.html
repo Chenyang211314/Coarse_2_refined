@@ -134,11 +134,14 @@ button{font:inherit}
 }
 h1,h2,h3,p{margin-top:0}
 h1{
-  max-width:980px;
+  max-width:1180px;
   margin:0 auto 1rem;
-  font-size:clamp(1.75rem,3.15vw,2.8rem);
-  line-height:1.08;
-  letter-spacing:-.045em;
+  font-size:clamp(1.72rem,2.75vw,2.52rem);
+  line-height:1.1;
+  letter-spacing:-.04em;
+}
+.title-line{
+  white-space:nowrap;
 }
 .subtitle{
   max-width:860px;
@@ -761,6 +764,8 @@ footer{
   .nav{display:none}
 }
 @media(max-width:640px){
+  .title-line{white-space:normal}
+  .title-break{display:none}
   .actions{display:none}
   .hero{padding-top:2.8rem}
   h1{font-size:clamp(1.85rem,8.8vw,2.7rem)}
@@ -801,7 +806,7 @@ footer{
 </header>
 <main class="page" id="top">
 <section class="hero">
-<h1>The Right Semantics at the Right Time: Adaptive Inference for Semantic-Faithful Video Diffusion</h1>
+<h1><span class="title-line">The Right Semantics at the Right Time:</span><br class="title-break"/><span class="title-line">Adaptive Inference for Semantic-Faithful Video Diffusion</span></h1>
 <p class="subtitle">A two-stage video inference framework that aligns semantic granularity with the denoising trajectory through prompt-adaptive switching, noise-aware sampling reallocation, and a stable coarse-to-refined latent transition.</p>
   <!--
 <article class="teaser reveal">
